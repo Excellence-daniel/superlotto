@@ -4,12 +4,16 @@
 /node_modules
 /.pnp
 .pnp.js
+.vscode
+public/materialize.css
+src/config
 
 # testing
 /coverage
 
 # production
 /build
+/dist
 
 # misc
 .DS_Store
