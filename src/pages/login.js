@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Header from './header';
 import { fireAuth, fireStore } from '../config';
 import validator from 'validator';
+import {Redirect} from 'react-router-dom';
 
 export default class Login extends Component {
     constructor(props) {
@@ -35,14 +36,17 @@ export default class Login extends Component {
                 try {
                     await fireAuth.auth().signInWithEmailAndPassword(email, password)
                     const getUserQuery = await fireStore.collection('Users').where('Email', '==', email).get();
-                    console.log(getUserQuery);
-                    if (getUserQuery.docs[0].EmailVerified){
+                    if (getUserQuery.docs[0].data().EmailVerified){
                         var user = await fireAuth.auth().currentUser;
                         localStorage.setItem('UserLoggedIn' , true);
+                        this.setState({redirect : true})
                         console.log(user);
+                        console.log('Logged in')
                     } else {
+                        alert('You cannot login until you verify your email.')
                         await fireAuth.auth().signOut();
                         localStorage.removeItem('UserLoggedIn');
+                        console.log('Not logged in')
                     }
                 }
                 catch (err) {
@@ -55,6 +59,9 @@ export default class Login extends Component {
         }
     }
     render() {
+        if (this.state.redirect === true){
+            return <Redirect to = '/'/>
+        }
         return (
             <div>
                 <Header />
