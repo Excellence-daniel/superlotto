@@ -9,6 +9,7 @@ export default class Header extends Component {
             await fireAuth.auth().signOut();
             localStorage.removeItem('UserLoggedIn');
             alert('Logged Out!');
+            window.location.reload();
         }
         catch (err) {
             alert('Error' + err.message);
