@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import validator from 'validator';
+import uuid from 'uuid';
 import Header from './header';
 import { fireAuth, fireStore } from '../config/index';
 
@@ -75,32 +77,37 @@ export default class SignUp extends Component {
         if (firstname === '' || lastname === '' || email === '' || password === '' || dateofbirth === '' || address === '' || phonenumber === '') {
             console.log('Complete all fields');
         } else {
-            try {
-                await fireAuth.auth().createUserWithEmailAndPassword(email, password)
-                await fireStore.collection('Users').add({
-                    Name: firstname + ' ' + lastname,
-                    Email: email,
-                    BirthDay: dateofbirth,
-                    Address: address,
-                    PhoneNumber: phonenumber,
-                    Password: password,
-                    UserToken: ''
-                })
-                await fireStore.collection('Accounts').add({
-                    Name: firstname + ' ' + lastname,
-                    Email: email,
-                    AccountBalance: 0,
-                    Wins: 0,
-                    WinsCash: 0,
-                    Losses: 0,
-                    LossesCash: 0,
-                    UserToken: ''
-                })
-                console.log('Created')
-            }
-            catch (err) {
-                console.log(err.message);
-                alert('Error.' + err.message);
+            if (validator.isEmail(email)) {
+                const userToken = uuid.v4();
+                try {
+                    await fireAuth.auth().createUserWithEmailAndPassword(email, password)
+                    await fireStore.collection('Users').add({
+                        Name: firstname + ' ' + lastname,
+                        Email: email,
+                        BirthDay: dateofbirth,
+                        Address: address,
+                        PhoneNumber: phonenumber,
+                        Password: password,
+                        UserToken: userToken
+                    })
+                    await fireStore.collection('Accounts').add({
+                        Name: firstname + ' ' + lastname,
+                        Email: email,
+                        AccountBalance: 0,
+                        Wins: 0,
+                        WinsCash: 0,
+                        Losses: 0,
+                        LossesCash: 0,
+                        UserToken: userToken
+                    })
+                    console.log('Created')
+                }
+                catch (err) {
+                    console.log(err.message);
+                    alert('Error.' + err.message);
+                }
+            } else {
+                alert('Invalid Email. Use a correct email')
             }
         }
     }
@@ -131,7 +138,7 @@ export default class SignUp extends Component {
 
                         <p className="col-12 col-md-6">
                             <label> Email </label>
-                            <input onChange={this.handleEmailInput} type="email" />
+                            <input onChange={this.handleEmailInput} placeholder = "you@yourmail.com" type="email" />
                         </p>
                     </div>
 
