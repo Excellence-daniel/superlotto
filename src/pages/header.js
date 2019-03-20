@@ -1,8 +1,20 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { fireAuth } from '../config/index';
 
 export default class Header extends Component {
+    logOut = async () => {
+        try {
+            await fireAuth.auth().signOut();
+            localStorage.removeItem('UserLoggedIn');
+            alert('Logged Out!');
+        }
+        catch (err) {
+            alert('Error' + err.message);
+            console.log(err.message);
+        }
+    }
     render() {
         let userLoggedIn;
         if (localStorage.getItem('UserLoggedIn')) {
@@ -30,18 +42,18 @@ export default class Header extends Component {
                             <div class="col-2"></div>
                             <div class="col-7">
                                 <div class="col-12" style={{ float: 'right' }}>
-                                <p style = {{float : 'right'}}>
-                                    <div class="row">
-                                        <div className="col-9">
-                                            <h4> Oyeniran Excellence D. </h4>
-                                            <h6> oyeniranexcellenced@gmail.com</h6>
+                                    <p style={{ float: 'right' }}>
+                                        <div class="row">
+                                            <div className="col-9">
+                                                <h4> Oyeniran Excellence D. </h4>
+                                                <h6> oyeniranexcellenced@gmail.com</h6>
+                                            </div>
+                                            <div className="col-3">
+                                                <Link to="/admin">
+                                                    <i className="fas fa-user-circle fa-3x"></i>
+                                                </Link>
+                                            </div>
                                         </div>
-                                        <div className="col-3">
-                                            <Link to="/admin">
-                                                <i className="fas fa-user-circle fa-3x"></i>
-                                            </Link>
-                                        </div>
-                                    </div>
                                     </p>
                                 </div>
                                 <div class="col-12 mt-3">
@@ -62,6 +74,9 @@ export default class Header extends Component {
                                             <Link>
                                                 <a> Check Results </a>
                                             </Link>
+                                        </li>
+                                        <li>
+                                            <button onClick = {this.logOut} className="btn btn-danger"> Log Out</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -115,6 +130,10 @@ export default class Header extends Component {
                                                 <a> Check Results </a>
                                             </Link>
                                         </li>
+
+                                        <li class="nav-item mt-2 active">
+                                            <button onClick = {this.logOut} className="btn btn-danger"> Log Out </button>
+                                        </li>
                                     </ul>
                                 </div>
                             </center>
@@ -154,11 +173,11 @@ export default class Header extends Component {
                                 </div>
                                 <div class="col-12 mt-3">
                                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0" style={{ float: 'right' }}>
-                                        <li class="nav-item" disabled>
+                                        {/* <li class="nav-item" disabled>
                                             <Link to="/account">
                                                 <a> Account </a>
                                             </Link>
-                                        </li>
+                                        </li> */}
 
                                         <li class="nav-item active">
                                             <Link>
@@ -202,11 +221,11 @@ export default class Header extends Component {
                                 </div>
                                 <div class="col-12 mt-3">
                                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                                        <li class="nav-item" disabled>
+                                        {/* <li class="nav-item" disabled>
                                             <Link to="/account">
                                                 <a> Account </a>
                                             </Link>
-                                        </li>
+                                        </li> */}
 
                                         <li class="nav-item mt-2 active">
                                             <Link>
