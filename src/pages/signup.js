@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import validator from 'validator';
 import uuid from 'uuid';
+import {Redirect} from 'react-router-dom';
 import Header from './header';
 import { fireAuth, fireStore } from '../config/index';
 
@@ -77,6 +78,7 @@ export default class SignUp extends Component {
         const { firstname, lastname, email, password, dateofbirth, address, phonenumber } = this.state;
         if (firstname === '' || lastname === '' || email === '' || password === '' || dateofbirth === '' || address === '' || phonenumber === '') {
             console.log('Complete all fields');
+            alert('Complete all fields');
         } else {
             if (validator.isEmail(email)) {
                 const userToken = uuid.v4();
@@ -116,6 +118,9 @@ export default class SignUp extends Component {
     }
 
     render() {
+        if (this.state.redirect === true){
+            return <Redirect to = "/login"/>
+        }
         return (
             <div>
                 <Header />
