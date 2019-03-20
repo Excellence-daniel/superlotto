@@ -21,7 +21,9 @@ export default class Header extends Component {
                         <div class="col-7">
                             <div class="col-12" style={{ float: 'right' }}>
                                 <p style={{ float: 'right' }}>
-                                    <button class="btn btn-primary btn-fontsize-18"> Login </button>
+                                    <Link to="/login">
+                                        <button class="btn btn-primary btn-fontsize-18"> Login </button>
+                                    </Link>
 
                                     <Link to="/signup">
                                         <button class="btn btn-primary btn-fontsize-18"> SignUp </button>
@@ -67,7 +69,9 @@ export default class Header extends Component {
                         <center>
                             <div class="col-12">
                                 <p>
-                                    <button class="btn btn-primary btn-fontsize-18"> Login </button>
+                                    <Link to="/login">
+                                        <button class="btn btn-primary btn-fontsize-18"> Login </button>
+                                    </Link>
 
                                     <Link to="/signup">
                                         <button class="btn btn-primary btn-fontsize-18"> SignUp </button>
