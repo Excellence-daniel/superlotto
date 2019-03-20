@@ -7,7 +7,7 @@ export default class App extends Component {
         return (
             <div>
                 <Header />
-                <img alt = "SuperLotto Img" class = "img-fluid" src="https://superlottong.com/Content/assets/superlotto/img/web_banner1.jpg" />
+                <img alt = "SuperLotto Img" class = "img-fluid" style = {{width : '100%'}} src="https://superlottong.com/Content/assets/superlotto/img/web_banner1.jpg" />
             </div>
         )
     }
