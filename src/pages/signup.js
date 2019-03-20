@@ -14,7 +14,8 @@ export default class SignUp extends Component {
             address: '',
             phonenumber: '',
             password: '',
-            dateofbirth: ''
+            dateofbirth: '',
+            redirect : false
         }
     }
 
@@ -100,7 +101,9 @@ export default class SignUp extends Component {
                         LossesCash: 0,
                         UserToken: userToken
                     })
-                    console.log('Created')
+                    console.log('Success!')
+                    alert('An account has been created for you.')
+                    this.setState({redirect : true})
                 }
                 catch (err) {
                     console.log(err.message);
