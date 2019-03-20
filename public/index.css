@@ -1,9 +1,40 @@
 .nav-style {
     /* height: 85px; */
-    color : #fff;
-    background: #0149a2cf;
+    background : #fff;
+    color:black;
 }
 
 a {
-    color : #fff;
+    color : black;
+    padding : 8px;
+    font-size : 20px;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+.menu-list {
+    margin-left : 60%;
+}
+
+.btn-fontsize-18 {
+    font-size : 18px;
+    margin : 15px;
+}
+
+.dropdown-btn-tog {
+    border : 0px none;
+}
+
+@media (min-width: 1015px) {
+    .for-small {
+        display : none;
+    }
+}
+
+@media (max-width : 1015px){
+    .for-large {
+        display : none;
+    }
 }
