@@ -76,22 +76,27 @@ export default class SignUp extends Component {
             console.log('Complete all fields');
         } else {
             try {
-                // const getUserQuery = await fireStore.collection('Users').where('Email', '===', email).get();
-                // if (getUserQuery.empty) {
-                    await fireAuth.auth().createUserWithEmailAndPassword(email, password)
-                    await fireStore.collection('Users').add({
-                        Name: firstname + ' ' + lastname,
-                        Email: email,
-                        BirthDay: dateofbirth,
-                        Address: address,
-                        PhoneNumber: phonenumber,
-                        Password: password,
-                        UserToken: ''
-                    })
-                    console.log('Created')
-                // } else {
-                //     console.log('A user exists with this email. Please use a unique email address')
-                // }
+                await fireAuth.auth().createUserWithEmailAndPassword(email, password)
+                await fireStore.collection('Users').add({
+                    Name: firstname + ' ' + lastname,
+                    Email: email,
+                    BirthDay: dateofbirth,
+                    Address: address,
+                    PhoneNumber: phonenumber,
+                    Password: password,
+                    UserToken: ''
+                })
+                await fireStore.collection('Accounts').add({
+                    Name: firstname + ' ' + lastname,
+                    Email: email,
+                    AccountBalance: 0,
+                    Wins: 0,
+                    WinsCash: 0,
+                    Losses: 0,
+                    LossesCash: 0,
+                    UserToken: ''
+                })
+                console.log('Created')
             }
             catch (err) {
                 console.log(err.message);
