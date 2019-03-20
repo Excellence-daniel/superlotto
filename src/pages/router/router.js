@@ -3,7 +3,7 @@ import React from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 
 import App from '../index';
-
+import SignUp from '../signup';
 // import LandingPage from './index'
 // import LoginUser from './login'
 // import SignUpUser from './signup'
@@ -23,6 +23,7 @@ export default function Routerr (){
             <div> 
 
                 <Route exact path = '/' component = {App}/>
+                <Route exact path = '/signup' component = {SignUp}/>
                 {/* <Route exact path = "/" component = {LandingPage}/>
                 <Route exact path = "/login" component = {LoginUser}/>
                 <Route exact path = "/signup" component = {SignUpUser}/>
