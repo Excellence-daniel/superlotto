@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Header} from './header';
+import Header from './header';
 
 
 export default class App extends Component {
@@ -7,7 +7,7 @@ export default class App extends Component {
         return (
             <div>
                 <Header />
-                <img alt = "SuperLotto Img" src="" />
+                <img alt = "SuperLotto Img" class = "img-fluid" src="https://superlottong.com/Content/assets/superlotto/img/web_banner1.jpg" />
             </div>
         )
     }
