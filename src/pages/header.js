@@ -33,7 +33,7 @@ export default class Header extends Component {
                             <div class="col-12 mt-3">
                                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0" style={{ float: 'right' }}>
                                     <li class="nav-item" disabled>
-                                        <Link>
+                                        <Link to = "/account">
                                             <a> Account </a>
                                         </Link>
                                     </li>
@@ -81,7 +81,7 @@ export default class Header extends Component {
                             <div class="col-12 mt-3">
                                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                                     <li class="nav-item" disabled>
-                                        <Link>
+                                        <Link to = "/account">
                                             <a> Account </a>
                                         </Link>
                                     </li>
