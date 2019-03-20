@@ -1,40 +1,43 @@
+#root {
+    font-family: 'Hind', sans-serif;
+}
+
 .nav-style {
-    /* height: 85px; */
-    background : #fff;
-    color:black;
+    background: #fff;
+    color: black;
 }
 
 a {
-    color : black;
-    padding : 8px;
-    font-size : 20px;
+    color: black;
+    padding: 8px;
+    font-size: 20px;
 }
 
-a:hover{
+a:hover {
     text-decoration: none;
 }
 
 .menu-list {
-    margin-left : 60%;
+    margin-left: 60%;
 }
 
 .btn-fontsize-18 {
-    font-size : 18px;
-    margin : 15px;
+    font-size: 18px;
+    margin: 15px;
 }
 
 .dropdown-btn-tog {
-    border : 0px none;
+    border: 0px none;
 }
 
 @media (min-width: 1015px) {
     .for-small {
-        display : none;
+        display: none;
     }
 }
 
-@media (max-width : 1015px){
+@media (max-width: 1015px) {
     .for-large {
-        display : none;
+        display: none;
     }
 }
