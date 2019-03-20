@@ -91,7 +91,8 @@ export default class SignUp extends Component {
                         Address: address,
                         PhoneNumber: phonenumber,
                         Password: password,
-                        UserToken: userToken
+                        UserToken: userToken, 
+                        EmailVerified : false
                     })
                     await fireStore.collection('Accounts').add({
                         Name: firstname + ' ' + lastname,
@@ -104,7 +105,7 @@ export default class SignUp extends Component {
                         UserToken: userToken
                     })
                     console.log('Success!')
-                    alert('An account has been created for you.')
+                    alert('An account has been created for you. Verfiy your email to login.')
                     this.setState({redirect : true})
                 }
                 catch (err) {
