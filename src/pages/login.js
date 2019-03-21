@@ -39,6 +39,7 @@ export default class Login extends Component {
                     if (getUserQuery.docs[0].data().EmailVerified){
                         var user = await fireAuth.auth().currentUser;
                         localStorage.setItem('UserLoggedIn' , true);
+                        alert('logged in')
                         this.setState({redirect : true})
                         console.log(user);
                         console.log('Logged in')
