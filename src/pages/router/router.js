@@ -7,7 +7,7 @@ import SignUp from '../signup';
 import Login from '../login';
 import Account from '../account';
 import Games from '../games';
-import LottoBall from '../games/lotto-ball';
+import Lotto from '../games/lotto';
 // import JoinClub from './club/joinClub'
 
 // import ViewProfile from './profile/viewProfile'
@@ -21,7 +21,7 @@ export default function Routerr (){
                 <Route exact path = '/login' component = {Login}/>
                 <Route exact path = '/account' component = {Account}/>
                 <Route exact path = '/games' component = {Games}/>
-                <Route exact path = '/games/lottoball' component = {LottoBall}/>
+                <Route exact path = '/lotto' component = {Lotto}/>
                 
                 {/* <Route exact path = "/" component = {LandingPage}/>                
 
