@@ -14,6 +14,10 @@ export default class Lotto extends Component {
     }
 
     componentDidMount = () => {
+        var x = document.getElementById("toast");
+        x.innerText = "Select just 2 random numbers..."
+        x.className = "show";
+        setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
         var restartbtn = document.getElementById('restartBtn');
         restartbtn.disabled = true;
         var allnos = this.state.numbers;
@@ -30,29 +34,52 @@ export default class Lotto extends Component {
     }
 
     generateNos = () => {
-        var restartbtn = document.getElementById('restartBtn');
-        var guessed = this.state.lottoNos;
-        var pickednos = this.state.pickedNumbers;
-        var winNums = this.state.winNumbers;
-        if (guessed.length < 5) {
-            var newNumber = Math.floor(Math.random() * 30);
-            if (pickednos.indexOf(newNumber) > -1) {
-                winNums.push(newNumber);
-                this.setState({ winNumbers: winNums });
-            }
-            guessed.push(newNumber);
-            this.setState({ lottoNos: guessed });
+        let restartbtn = document.getElementById('restartBtn');
+        const guessed = this.state.lottoNos;
+        const pickednos = this.state.pickedNumbers;
+        const winNums = this.state.winNumbers;
+        // var newNumber = Math.floor(Math.random() * 30);
+        // winNums.push(newNumber);
+        // this.setState({ winNumbers: winNums });
+        //  this.setState({ winNumbers: 1 });
+        // if (guessed.length < 5) {
+        const self = this;
+        setInterval(function () {
+            if (guessed.length < 5) {
+                var newNumber = Math.floor(Math.random() * 30);
+                guessed.push(parseInt(newNumber));
+                self.setState({ lottoNos: guessed });
 
-            if (guessed.length === 5){
-                restartbtn.disabled = false;
-                if (winNums.length > 0){
-                    alert('You won' + winNums.length + 'balls');
-                } else {
-                    alert('You did not win any ball.')
+                let index = pickednos.includes(parseInt(newNumber));
+                console.log(index);
+                if (index){
+                    const numberWon = parseInt(newNumber);
+                    console.log('Found')
+                    winNums.push(numberWon);
+                    self.setState({winNumbers : winNums});
+                }
+
+                if (guessed.length === 5) {
+                    var x = document.getElementById("toast");
+                    x.innerText = "Finished Generating..."
+                    x.className = "show";
+                    setTimeout(function () { x.className = x.className.replace("show", ""); }, 1000);
+
+                    if (winNums.length > 0){
+                        x.innerText = "You won " + winNums.length + "balls."
+                        x.className = "show";
+                        setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+                    } else {
+                        x.innerText = "You didn't win any ball."
+                        x.className = "show";
+                        setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+                    }
+                    restartbtn.disabled = false;
                 }
             }
-        }
-        
+
+
+        }, 3000)
     };
 
     getNum = e => {
@@ -61,10 +88,17 @@ export default class Lotto extends Component {
         console.log(newNum);
 
         if (pickednos.length < 2) {
-            pickednos.push(newNum);
+            pickednos.push(parseInt(newNum));
             this.setState({ pickedNumbers: pickednos });
-        } else {
-            alert("You cannot pick more than 2");
+
+            if (pickednos.length === 2) {
+                var x = document.getElementById("toast");
+                x.innerText = "Generate Lotto Numbers..."
+                x.className = "show";
+                setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
+                // setInterval(this.generateNos(), 3000);
+                // this.generateNos();
+            }
         }
     };
 
@@ -154,6 +188,9 @@ export default class Lotto extends Component {
                                 <p className="col-12">
                                     <button id="restartBtn" onClick={this.restartGame} className="btn btn-info btn-block"> Restart Game </button>
                                 </p>
+                                <div id="toast">
+                                    Toast Message
+                                </div>
                             </div>
                         </div>
                     </div>
