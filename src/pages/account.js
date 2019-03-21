@@ -3,6 +3,48 @@ import Header from './header';
 
 
 export default class Account extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            accoutBalance: 0,
+            accountNumber: '',
+            bankName: '',
+            pin: '',
+            amount: ''
+        }
+    }
+
+    handleAccountNumber = (e) => {
+        if (e.target.value) {
+            this.setState({ accountNumber: e.target.value.trim() });
+        }
+    }
+
+    handleBankNameSelect = (e) => {
+        if (e.target.value) {
+            this.setState({ bankName: e.target.value.trim() });
+        }
+    }
+
+    handlePinInput = (e) => {
+        var id = e.target.id
+        if (e.target.value && e.target.value.length < 4) {
+            this.setState({ pin: e.target.value.trim() })
+        } else {
+            id.disabled = true
+        }
+    }
+
+    handleAmountInput = (e) => {
+        if (e.target.value) {
+            this.setState({ amount: e.target.value.trim() })
+        }
+    }
+
+    saveTransaction = () => {
+
+    }
+
     render() {
         return (
             <div>
@@ -58,12 +100,12 @@ export default class Account extends Component {
                                     <div class="modal-body">
                                         <p className="col-12">
                                             <label> Account Number </label>
-                                            <input type="number" placeholder="5039XXXXXXXXXXXXX09" />
+                                            <input onChange = {this.handleAccountNumber} type="number" placeholder="5039XXXXXXXXXXXXX09" />
                                         </p>
 
                                         <p className="col-12">
                                             <label> Select Bank  </label>
-                                            <select>
+                                            <select onChange = {this.handleBankNameSelect}>
                                                 <option value="Access Bank"> Access Bank </option>
                                                 <option value="Skye Bank"> Skye Bank </option>
                                                 <option value="Sterling Bank"> Sterling Bank </option>
@@ -83,22 +125,22 @@ export default class Account extends Component {
 
                                         <p className="col-12">
                                             <label> Amount </label>
-                                            <input type = "number"/>
+                                            <input onChange = {this.handleAmount} type="number" />
                                         </p>
 
-                                        <p className = "col-12">
-                                            <label> Pin </label> 
-                                            <input type = "password" placeholder = "xxxx"/>
+                                        <p className="col-12">
+                                            <label> Pin </label>
+                                            <input onChange={this.handlePinInput} id="pin" type="password" placeholder="xxxx" />
                                         </p>
 
-                                        <p className = "col-12">
-                                            <button className = "btn btn-success btn-block"> Pay </button>
+                                        <p className="col-12">
+                                            <button className="btn btn-success btn-block"> Pay </button>
                                         </p>
 
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                        {/* <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> */}
+                                        <button type="button" class="btn btn-primary" onClick={this.saveTransaction}>Save Transaction</button>
                                     </div>
                                 </div>
                             </div>
