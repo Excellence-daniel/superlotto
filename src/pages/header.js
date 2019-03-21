@@ -77,7 +77,7 @@ export default class Header extends Component {
                                         </li>
 
                                         <li class="nav-item active">
-                                            <Link>
+                                            <Link to = "/games">
                                                 <a> Play Game  </a>
                                             </Link>
                                         </li>
@@ -134,7 +134,7 @@ export default class Header extends Component {
                                         </li>
 
                                         <li class="nav-item mt-2 active">
-                                            <Link>
+                                            <Link to = "/games">
                                                 <a> Play Game  </a>
                                             </Link>
                                         </li>
@@ -194,7 +194,7 @@ export default class Header extends Component {
                                         </li> */}
 
                                         <li class="nav-item active">
-                                            <Link>
+                                            <Link to = "/games">
                                                 <a> Play Game  </a>
                                             </Link>
                                         </li>
@@ -244,7 +244,7 @@ export default class Header extends Component {
                                         </li> */}
 
                                         <li class="nav-item mt-2 active">
-                                            <Link>
+                                            <Link to = "/games">
                                                 <a> Play Game  </a>
                                             </Link>
                                         </li>
