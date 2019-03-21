@@ -1,25 +1,54 @@
 import React, { Component } from 'react';
 import Header from './header';
-import {fireAuth, fireStore} from '../config/index';
+import { fireAuth, fireStore } from '../config/index';
+import { Redirect } from 'react-router-dom';
 
 
 export default class Account extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            accoutBalance: 0,
+            accountBalance: '0',
             accountNumber: '',
             bankName: '',
             pin: '',
-            amount: '', 
-            newAmount : '5000'
+            amount: '',
+            newAmount: '',
+            redirect: false,
+            userName: '',
+            userEmail: '',
+            wins: 0,
+            winsCash: 0,
+            losses: 0,
+            lossesCash: 0,
+            userId : ''
         }
     }
 
     componentDidMount = async () => {
-        const user = await fireAuth.auth().currentUser
         var closebtn = document.getElementById('closebtn');
         closebtn.disabled = true;
+        const user = await fireAuth.auth().currentUser;
+        if (user) {
+            var email = user.email;
+            console.log(email)
+            const getUserWithEmail = await fireStore.collection('Accounts').where('Email', '==', email).get();
+            if (!(getUserWithEmail.empty)) {
+                const userId = getUserWithEmail.docs[0].id;
+                const userData = getUserWithEmail.docs[0].data();
+                console.log(userData);
+                this.setState({
+                    userName: userData.Name, userEmail: userData.Email, wins: userData.Wins, winsCash: userData.WinsCash,
+                    losses: userData.Losses, lossesCash: userData.LossesCash, accountBalance: userData.AccountBalance, userId
+                });
+            } else {
+                alert('User does not exist');
+                this.setState({ redirect: true })
+            }
+        } else {
+            alert('Login to access this page')
+            this.setState({ redirect: true })
+        }
     }
 
     handleAccountNumber = (e) => {
@@ -46,20 +75,25 @@ export default class Account extends Component {
         }
     }
 
-    saveTransaction = () => {
+    saveTransaction = async () => {
         var closebtn = document.getElementById('closebtn')
         var payBtn = document.getElementById('payBtn');
+        var modalBody = document.getElementById('modal-body')
         const { amount, accountNumber, pin, bankName } = this.state;
         if (amount === '' || accountNumber === '' || pin === '' || bankName === '') {
             alert('Complete all field inputs');
         } else {
             if (accountNumber.length === 12 && accountNumber === '000000111111') {
                 if (pin === '1220' & pin.length === 4) {
-                    alert('Success Transaction');
-                    var formerAmount = parseInt(this.state.newAmount);
+                    var formerAmount = parseInt(this.state.accountBalance);
                     var rechargedAmount = parseInt(amount);
                     var newAmount = formerAmount + rechargedAmount;
-                    this.setState({newAmount})
+                    this.setState({ accountBalance : newAmount })
+                    await fireStore.collection('Accounts').doc(this.state.userId).update({
+                        AccountBalance : newAmount
+                    })
+                    var success = `<center><img src = 'img/success.png' style = "width : 60%" class = 'img-fluid'/> <br/><br/> <h3> Successful Transaction </h3></center>`
+                    modalBody.innerHTML = success
                     closebtn.disabled = false;
                     payBtn.disabled = true;
                 } else {
@@ -72,6 +106,9 @@ export default class Account extends Component {
     }
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect to="/" />
+        }
         return (
             <div>
                 <Header />
@@ -80,35 +117,35 @@ export default class Account extends Component {
                     <div className="row card card-body">
                         <p className="col-12">
                             <label> Full Name </label>
-                            <input type="text" disabled/>
+                            <input type="text" value = {this.state.userName} disabled />
                         </p>
 
                         <p className="col-12">
                             <label> Email </label>
-                            <input type="email" disabled/>
+                            <input type="email" value = {this.state.userEmail} disabled />
                         </p>
 
                         <div className="row" style={{ fontSize: '20px', padding: '15px' }}>
                             <p className="col-12">
-                                Account Balance (#) : <span>{this.state.newAmount}</span>
+                                Account Balance (#) : <span> {this.state.accountBalance} </span>
 
                                 <button style={{ marginLeft: '10%' }} type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"> Recharge Account </button>
                             </p>
 
                             <p className="col-12 col-md-6">
-                                Wins : <span> 2</span>
+                                Wins : <span> {this.state.wins} </span>
                             </p>
 
                             <p className="col-12 col-md-6">
-                                Wins (#) : <span> 2,000</span>
+                                Wins (#) : <span>{this.state.winsCash}</span>
                             </p>
 
                             <p className="col-12 col-md-6">
-                                Losses : <span> 4 </span>
+                                Losses : <span> {this.state.losses} </span>
                             </p>
 
                             <p className="col-12 col-md-6">
-                                Losses (#) : <span> 5,000</span>
+                                Losses (#) : <span> {this.state.lossesCash} </span>
                             </p>
                         </div>
 
@@ -121,7 +158,7 @@ export default class Account extends Component {
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <div class="modal-body">
+                                    <div class="modal-body" id = "modal-body">
                                         <p className="col-12">
                                             <label> Account Number </label>
                                             <input onChange={this.handleAccountNumber} type="number" placeholder="5039XXXXXXXXXXXXX09" />
@@ -160,7 +197,7 @@ export default class Account extends Component {
                                         </p>
 
                                         <p className="col-12">
-                                            <button className="btn btn-success btn-block" onClick={this.saveTransaction} id = "payBtn"> Pay </button>
+                                            <button className="btn btn-success btn-block" onClick={this.saveTransaction} id="payBtn"> Pay </button>
                                         </p>
 
                                     </div>
