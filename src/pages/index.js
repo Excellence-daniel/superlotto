@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
 import Header from './header';
-
+import {fireAuth} from '../config/index';
 
 export default class App extends Component {
+
+    componentDidMount = async () => {
+        const user = await fireAuth.auth().currentUser;
+        if (user) {
+            localStorage.setItem('UserLoggedIn', true);
+        } else {
+            localStorage.removeItem('UserLoggedIn');
+        }
+    }
+
     render() {
         return (
             <div>
