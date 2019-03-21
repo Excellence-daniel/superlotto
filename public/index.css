@@ -442,7 +442,71 @@ h3 {
     cursor: pointer;
   }
 
+  .picked-balls {
+    position: relative;
+    /* background: radial-gradient(at top left, #ff5f6d, #ffc371); */
+    background : #fb9b0a;
+    border: 1px solid #fb9b0a;
+    margin: 3px;
+    color: #fff;
+    outline: none;
+    padding: 9px;
+    float: left;
+    border-radius: 50%;
+    font-size: 20px;
+    width: 50px;
+    text-align: center;
+    height: 50px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .lotto-balls {
+    position: relative;
+    /* background: radial-gradient(at top left, #ff5f6d, #ffc371); */
+    background: #e00908c9;
+    border: 1px solid #e73d3c;
+    margin: 3px;
+    color: #fff;
+    outline: none;
+    padding: 9px;
+    float: left;
+    border-radius: 50%;
+    font-size: 20px;
+    width: 50px;
+    text-align: center;
+    height: 50px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .wins-balls{
+    position: relative;
+    /* background: radial-gradient(at top left, #ff5f6d, #ffc371); */
+    background: #e00908c9;
+    border: 1px solid #e73d3c;
+    margin: 3px;
+    color: #fff;
+    outline: none;
+    padding: 9px;
+    float: left;
+    border-radius: 50%;
+    font-size: 20px;
+    width: 50px;
+    text-align: center;
+    height: 50px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
   li {
       list-style-type : none;
   }
   
+  #toright {
+      float : right;
+  }
+
+  #stats {
+      font-size : 18px;
+  }
