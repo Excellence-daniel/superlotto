@@ -5,8 +5,8 @@ import { fireAuth } from '../config/index';
 
 export default class Header extends Component {
     componentDidMount = async () => {
-        const user =await fireAuth.auth().currentUser
-        if (user){
+        const user = await fireAuth.auth().currentUser
+        if (user) {
             localStorage.setItem('UserLoggedIn', true);
         } else {
             localStorage.removeItem('UserLoggedIn');
@@ -44,9 +44,11 @@ export default class Header extends Component {
                         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                             <div class="col-3">
                                 <center>
-                                    <a class="navbar-brand" href="#">
-                                        <img src="https://superlottong.com/Content/assets/superlotto/img/logo.png" alt="logo" class="img-fluid" />
-                                    </a>
+                                    <Link to="/">
+                                        <a class="navbar-brand">
+                                            <img src="https://superlottong.com/Content/assets/superlotto/img/logo.png" alt="logo" class="img-fluid" />
+                                        </a>
+                                    </Link>
                                 </center>
                             </div>
                             <div class="col-2"></div>
@@ -86,7 +88,7 @@ export default class Header extends Component {
                                             </Link>
                                         </li>
                                         <li>
-                                            <button onClick = {this.logOut} className="btn btn-danger"> Log Out</button>
+                                            <button onClick={this.logOut} className="btn btn-danger"> Log Out</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -98,9 +100,11 @@ export default class Header extends Component {
 
                     {/* //for small screens */}
                     <nav class="navbar navbar-expand-lg navbar-light for-small">
-                        <center>
-                            <a class="navbar-brand" href="#"> <img src="https://superlottong.com/Content/assets/superlotto/img/logo.png" alt="logo" class="img-fluid" /> </a>
-                        </center>
+                        <Link to="/">
+                            <a class="navbar-brand">
+                                <img src="https://superlottong.com/Content/assets/superlotto/img/logo.png" alt="logo" class="img-fluid" />
+                            </a>
+                        </Link>
                         <button class="navbar-toggler dropdown-btn-tog" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
@@ -142,7 +146,7 @@ export default class Header extends Component {
                                         </li>
 
                                         <li class="nav-item mt-2 active">
-                                            <button onClick = {this.logOut} className="btn btn-danger"> Log Out </button>
+                                            <button onClick={this.logOut} className="btn btn-danger"> Log Out </button>
                                         </li>
                                     </ul>
                                 </div>
@@ -162,11 +166,11 @@ export default class Header extends Component {
                         </button>
                         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                             <div class="col-3">
-                                <center>
-                                    <a class="navbar-brand" href="#">
+                                <Link to="/">
+                                    <a class="navbar-brand">
                                         <img src="https://superlottong.com/Content/assets/superlotto/img/logo.png" alt="logo" class="img-fluid" />
                                     </a>
-                                </center>
+                                </Link>
                             </div>
                             <div class="col-2"></div>
                             <div class="col-7">
@@ -210,9 +214,11 @@ export default class Header extends Component {
 
                     {/* //for small screens */}
                     <nav class="navbar navbar-expand-lg navbar-light for-small">
-                        <center>
-                            <a class="navbar-brand" href="#"> <img src="https://superlottong.com/Content/assets/superlotto/img/logo.png" alt="logo" class="img-fluid" /> </a>
-                        </center>
+                        <Link to="/">
+                            <a class="navbar-brand">
+                                <img src="https://superlottong.com/Content/assets/superlotto/img/logo.png" alt="logo" class="img-fluid" />
+                            </a>
+                        </Link>
                         <button class="navbar-toggler dropdown-btn-tog" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
