@@ -50,7 +50,7 @@ export default class Header extends Component {
                                                 <h6> oyeniranexcellenced@gmail.com</h6>
                                             </div>
                                             <div className="col-3">
-                                                <Link to="/admin">
+                                                <Link to="/account">
                                                     <i className="fas fa-user-circle fa-3x"></i>
                                                 </Link>
                                             </div>
@@ -101,7 +101,7 @@ export default class Header extends Component {
                                     <p>
                                         <div class="row">
                                             <div className="col-4" style={{ marginRight: '0px', marginLeft: '0px' }}>
-                                                <Link to="/admin" style={{ float: 'right' }}>
+                                                <Link to="/account" style={{ float: 'right' }}>
                                                     <i className="fas fa-user-circle fa-3x"></i>
                                                 </Link>
                                             </div>
