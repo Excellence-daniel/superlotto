@@ -4,6 +4,15 @@ import { Link } from 'react-router-dom';
 import { fireAuth } from '../config/index';
 
 export default class Header extends Component {
+    componentDidMount = async () => {
+        const user =await fireAuth.auth().currentUser
+        if (user){
+            localStorage.setItem('UserLoggedIn', true);
+        } else {
+            localStorage.removeItem('UserLoggedIn');
+        }
+    }
+
     logOut = async () => {
         try {
             await fireAuth.auth().signOut();
