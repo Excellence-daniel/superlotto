@@ -10,7 +10,7 @@ export default class Games extends Component {
                 <div className="container-fluid">
                     <div className="row">
                     <div className="col-12 col-md-4 frame zoomin">
-                        <Link to='/games/lottoball'>
+                        <Link to='/lotto'>
                                 <h3> Lotto Balls </h3>
                                 <img src = "https://superlottong.com/Content/assets/superlotto/img/live-games/lucky-5.jpg" alt="Lotto Balls" className="img-fluid" />
                         </Link>
