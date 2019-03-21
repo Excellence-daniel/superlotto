@@ -422,3 +422,27 @@ h3 {
 }
 
 /* for games page ends */
+
+.all-number-balls {
+    position: relative;
+    /* background: radial-gradient(at top left, #ff5f6d, #ffc371); */
+    background : #f74713bd;
+    border: 1px solid #ff5f6d;
+    margin: 3px;
+    color: #fff;
+    outline: none;
+    padding: 9px;
+    float: left;
+    border-radius: 50%;
+    font-size: 20px;
+    width: 50px;
+    text-align: center;
+    height: 50px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  li {
+      list-style-type : none;
+  }
+  
