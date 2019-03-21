@@ -23,7 +23,6 @@ export default function Routerr (){
     return (
         <Router> 
             <div> 
-
                 <Route exact path = '/' component = {App}/>
                 <Route exact path = '/signup' component = {SignUp}/>
                 <Route exact path = '/login' component = {Login}/>
