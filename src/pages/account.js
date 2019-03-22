@@ -92,7 +92,7 @@ export default class Account extends Component {
                     await fireStore.collection('Accounts').doc(this.state.userId).update({
                         AccountBalance : newAmount
                     })
-                    var success = `<center><img src = 'img/success.png' style = "width : 60%" class = 'img-fluid'/> <br/><br/> <h3> Successful Transaction </h3></center>`
+                    var success = `<center><img src = 'img/success.png' style = "width : 60%" class = 'img-fluid'/> <br/><br/> <h4> Successful Transaction </h4></center>`
                     modalBody.innerHTML = success
                     closebtn.disabled = false;
                     payBtn.disabled = true;
