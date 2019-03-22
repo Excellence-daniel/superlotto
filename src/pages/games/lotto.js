@@ -9,7 +9,14 @@ export default class Lotto extends Component {
             lottoNos: [],
             numbers: [],
             pickedNumbers: [],
-            winNumbers: []
+            winNumbers: [], 
+            betAmount : 0, 
+            wins : 0, 
+            losses : 0, 
+            winsCash : 0 , 
+            lossesCash : 0, 
+            amountPlayed : 0, 
+            gamesPlayed : 0
         };
     }
 
@@ -24,6 +31,12 @@ export default class Lotto extends Component {
             this.setState({ numbers: allnos });
         }
     };
+
+    amounttoPlay = (e) => {
+        if (e.target.value){
+            this.setState({betAmount : e.target.value})
+        }
+    }
 
     startGame = () => {
         const playGameBtn = document.getElementById('playGame');
@@ -182,11 +195,12 @@ export default class Lotto extends Component {
 
                                 <p className="col-12" id="stats">
                                     <span> Stats </span>
-                                    <p> Games Played : <span id="toright"> 3 </span></p>
-                                    <p> Wins : <span id="toright"> 3 </span></p>
-                                    <p> Losses : <span id="toright"> 3 </span></p>
-                                    <p> Amount Won(#) : <span id="toright"> 3 </span></p>
-                                    <p> Amount Lost (#) : <span id="toright"> 3 </span></p>
+                                    <p> Games Played : <span id="toright"> {this.state.gamesPlayed} </span></p>
+                                    <p> Wins : <span id="toright"> {this.state.wins} </span></p>
+                                    <p> Losses : <span id="toright"> {this.state.losses} </span></p>
+                                    <p> Amount Won(#) : <span id="toright"> {this.state.winsCash} </span></p>
+                                    <p> Amount Lost (#) : <span id="toright"> {this.state.lossesCash} </span></p>
+                                    <p> Amount Played (#) : <span id="toright"> {this.state.amountPlayed} </span></p>
                                 </p>
                                 <div id="toast">
                                     Toast Message
