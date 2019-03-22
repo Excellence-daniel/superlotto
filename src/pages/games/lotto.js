@@ -24,6 +24,8 @@ export default class Lotto extends Component {
     componentDidMount = () => {
         const x = document.getElementById("toast");
         const endGameBtn = document.getElementById('endGame');
+        const generateLottoBtn = document.getElementById('generateLotto');
+        generateLottoBtn.disabled = true;
         endGameBtn.disabled = true;
         x.innerText = "Select just 2 random numbers..."
         x.className = "show";
@@ -39,26 +41,37 @@ export default class Lotto extends Component {
         if (e.target.value) {
             this.setState({ betAmount: e.target.value })
         }
-        const toast = document.getElementById('toast');
+        // const toast = document.getElementById('toast');
+        // toast.innerText = ''
+        // toast.className = 'show';
     }
 
     startGame = () => {
+        const toast = document.getElementById('toast');
+        if (this.state.betAmount === ''){
+            toast.innerText = 'You have to place a bet on an amount to play this game';
+            toast.className = 'show';
+            setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 1000);
+        }
         const playGameBtn = document.getElementById('playGame');
         const selectAmount = document.getElementById('betAmount');
+        const endGameBtn = document.getElementById('endGame');
         const amountPlayed = parseInt(this.state.amountPlayed);
         const amountBetOn = parseInt(this.state.betAmount);
         let numberofGamesPlayed = this.state.gamesPlayed;
+        const ulForRandomNum = document.getElementById('disabled');
         console.log("games Played", numberofGamesPlayed);
         playGameBtn.disabled = true;
         selectAmount.disabled = true;
+        endGameBtn.disabled = false;
         this.setState({ pickedNumbers: [], winNumbers: [], lottoNos: [], gamesPlayed : (numberofGamesPlayed+1), amountPlayed : (amountPlayed + amountBetOn) });
-        const ulForRandomNum = document.getElementById('disabled');
         ulForRandomNum.id = "show";
     }
 
     generateLottoNumbers = () => {
         const playGameBtn = document.getElementById("playGame");
         const selectAmount = document.getElementById('betAmount');
+        const generateLottoBtn = document.getElementById('generateLotto');
         const amountBetOn = this.state.betAmount;
         const x = document.getElementById("toast");
         const guessed = this.state.lottoNos;
@@ -68,6 +81,7 @@ export default class Lotto extends Component {
         let gamesLost = parseInt(this.state.losses);
         let amountWon = this.state.winsCash;
         let amountLost = this.state.lossesCash;
+        generateLottoBtn.disabled = true;
         const self = this;
         setInterval(function () {
             if (guessed.length < 5) {
@@ -112,8 +126,9 @@ export default class Lotto extends Component {
 
     playerPickNumbers = e => {
         const ulForRandomNum = document.getElementById("show");
-        var pickednos = this.state.pickedNumbers;
-        var newNum = e.target.id;
+        const generateLottoBtn = document.getElementById('generateLotto');
+        let pickednos = this.state.pickedNumbers;
+        const newNum = e.target.id;
         console.log(newNum);
 
         if (pickednos.length < 2) {
@@ -121,7 +136,8 @@ export default class Lotto extends Component {
             this.setState({ pickedNumbers: pickednos });
 
             if (pickednos.length === 2) {
-                var x = document.getElementById("toast");
+                generateLottoBtn.disabled = false;
+                const x = document.getElementById("toast");
                 ulForRandomNum.id = "disabled";
                 x.innerText = "Generate Lotto Numbers..."
                 x.className = "show";
@@ -129,6 +145,23 @@ export default class Lotto extends Component {
             }
         }
     };
+
+    endGameAndGetResult = () =>{
+        const result = document.getElementById('result');
+        const generateLottoBtn = document.getElementById('generateLotto');
+        const selectAmount = document.getElementById('betAmount');
+        const playGameBtn = document.getElementById('playGame');
+        const endGameBtn = document.getElementById('endGame');
+        const ulForRandomNum = document.getElementById('disabled');
+        const amountBalance = (parseInt(this.state.amountPlayed) + parseInt(this.state.winsCash)) - parseInt(this.state.lossesCash);
+
+        generateLottoBtn.disabled = true;
+        selectAmount.disabled = true;
+        playGameBtn.disabled = true;
+        endGameBtn.disabled = true;
+        ulForRandomNum.disabled = true;
+        result.innerText = `Your final balance is ${amountBalance}`;
+    }
 
     render() {
         return (
@@ -192,7 +225,7 @@ export default class Lotto extends Component {
                             </div>
 
                             <div className="col-12 mt-4">
-                                <button className="btn btn-block btn-info" onClick={this.generateLottoNumbers}> Generate Lotto Numbers </button>
+                                <button className="btn btn-block btn-info" id = "generateLotto" onClick={this.generateLottoNumbers}> Generate Lotto Numbers </button>
                             </div>
 
                         </div>
@@ -218,7 +251,7 @@ export default class Lotto extends Component {
                                     <p> Amount Won(#) : <span id="toright"> {this.state.winsCash} </span></p>
                                     <p> Amount Lost (#) : <span id="toright"> {this.state.lossesCash} </span></p>
                                     <p> Amount Played (#) : <span id="toright"> {this.state.amountPlayed} </span></p>
-                                    <p> <button className = "btn btn-block btn-danger" id = "endgame"> End Game  </button></p>
+                                    <p> <button className = "btn btn-block btn-danger" id = "endGame" onClick = {this.endGameAndGetResult}> End Game  </button></p>
                                     <p id ="result"> </p>
                                 </p>
                                 <div id="toast">
