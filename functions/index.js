@@ -11,7 +11,7 @@ exports.validateNewEmail = functions.firestore
         const userData = event.data();
         console.log("user data", userData)
         const user = userData
-        const url = `https://superlotto-3be45.firebaseapp.com/confirmEmail?UserToken=${user.UserToken}`
+        const url = `https://superlotto-3be45.firebaseapp.com/confirmEmail?UT=${user.UserToken}`
         if (user) {
             const msg = {
                 to: user.Email,
