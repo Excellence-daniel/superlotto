@@ -1,8 +1,36 @@
 const functions = require('firebase-functions');
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+const SENDGRID_API_KEY = functions.config().sendgrid.key;
+
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(SENDGRID_API_KEY);
+
+exports.validateNewEmail = functions.firestore
+    .document('Users/{UsersId}')
+    .onCreate((event) => new Promise((resolve, reject) => {
+        const userData = event.data();
+        console.log("user data", userData)
+        const user = userData
+        const url = `https://superlotto-3be45.firebaseapp.com/confirmEmail?UserToken=${user.UserToken}`
+        if (user) {
+            const msg = {
+                to: user.Email,
+                from: 'SuperLotto',
+                subject: 'Email Verification : ',
+                // text: `Hey ${toName}. You have a new follower!!! `,
+                html: `
+                            <strong> Hello ${user.Name}. Welcome to SuperLotto App. You have to verify your email to enable you access to particular pages. Click on the button below to confirm your email. Thank you.</strong>
+                                <br/><br/><br/>
+                            <center>
+                                <a href = ${url}> <button> Confirm Email </button> </a>
+                            </center>
+                        `,
+            }
+            sgMail.send(msg)
+                .then(() => console.log('Email.sent'))
+                .catch((e) => {
+                    console.log(e)
+                })
+        }
+    }))
+
