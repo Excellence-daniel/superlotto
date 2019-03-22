@@ -181,7 +181,7 @@ export default class Lotto extends Component {
         }
     };
 
-    endGameAndGetResult = () => {
+    endGameAndGetResult = async () => {
         const result = document.getElementById('result');
         const generateLottoBtn = document.getElementById('generateLotto');
         const selectAmount = document.getElementById('betAmount');
@@ -189,6 +189,7 @@ export default class Lotto extends Component {
         const endGameBtn = document.getElementById('endGame');
         const ulForRandomNum = document.getElementById('disabled');
         const amountBalance = (parseInt(this.state.amountPlayed) + parseInt(this.state.winsCash)) - parseInt(this.state.lossesCash);
+        // this.setState({finalWinBalance})
 
         generateLottoBtn.disabled = true;
         selectAmount.disabled = true;
@@ -196,6 +197,20 @@ export default class Lotto extends Component {
         endGameBtn.disabled = true;
         ulForRandomNum.disabled = true;
         result.innerText = `Your final balance is #${amountBalance}.`;
+        const getPlayerAccountDetails = await fireStore.collection('Accounts').doc(this.state.playerAccountID).get()
+        const playerData = getPlayerAccountDetails.data();
+        let wins = parseInt(playerData.Wins);
+        let losses = parseInt(playerData.Losses);
+        let winsCash = parseInt(playerData.WinsCash);
+        let lossesCash = parseInt(playerData.LossesCash);
+        console.log(wins, losses, winsCash, lossesCash);
+
+        await fireStore.collection('Accounts').doc(this.state.playerAccountID).update({
+            Wins : ( wins + parseInt(this.state.wins)), 
+            Losses : (losses + parseInt(this.state.losses)), 
+            LossesCash : (lossesCash + parseInt(this.state.lossesCash)),
+            WinsCash : (winsCash + parseInt(this.state.winsCash))
+        })
     }
 
     render() {
@@ -294,7 +309,7 @@ export default class Lotto extends Component {
                                     <p id="result"> </p>
                                 </p>
                                 <div id="toast">
-                                    Toast Message
+                                    {/* Toast Message Goes In Here */}
                                 </div>
                             </div>
                         </div>
