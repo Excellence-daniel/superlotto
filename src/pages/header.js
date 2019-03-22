@@ -9,6 +9,7 @@ export default class Header extends Component {
         if (user) {
             localStorage.setItem('UserLoggedIn', true);
         } else {
+            fireAuth.auth().signOut();
             localStorage.removeItem('UserLoggedIn');
         }
     }
