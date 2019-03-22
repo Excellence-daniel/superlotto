@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../header';
+import { fireAuth, fireStore } from '../../config/index';
 
 export default class Lotto extends Component {
 
@@ -17,53 +18,83 @@ export default class Lotto extends Component {
             lossesCash: 0,
             amountPlayed: 0,
             gamesPlayed: 0,
-            numberOfBallsWon: 0
+            numberOfBallsWon: 0,
+            playerAccountBalance: 0
         };
     }
 
-    componentDidMount = () => {
+    componentDidMount = async () => {
         const toast = document.getElementById("toast");
         const endGameBtn = document.getElementById('endGame');
+        const playGameBtn = document.getElementById('playGame');
+        const selectAmount = document.getElementById('betAmount');
         const generateLottoBtn = document.getElementById('generateLotto');
-        generateLottoBtn.disabled = true;
+
+        playGameBtn.disabled = true;
+        selectAmount.disabled = true;
         endGameBtn.disabled = true;
-        toast.innerText = "Pick an amount to bet on.";
-        toast.className = "show";
+        generateLottoBtn.disabled = true;
         let allnos = this.state.numbers;
         for (let i = 1; i <= 30; i++) {
             allnos.push(i);
             this.setState({ numbers: allnos });
         }
+        const user = await fireAuth.auth().currentUser;
+        console.log('User', user);
+        if (user === null) {
+            alert('Log in to play this game');
+        } else {
+            const getPlayerData = await fireStore.collection('Accounts').where('Email', '==', user.email).get();
+            const playerAccountBalance = getPlayerData.docs[0].data().AccountBalance;
+            this.setState({playerAccountBalance});
+
+            playGameBtn.disabled = false;
+            selectAmount.disabled = false;
+            toast.innerText = "Pick an amount to bet on.";
+            toast.className = "show";
+        }
         setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 2000);
     };
 
     amounttoPlay = (e) => {
+        // const playersAccountbalance = this.state.playerAccountBalance;
         if (e.target.value) {
-            this.setState({ betAmount: e.target.value })
+            this.setState({ betAmount: e.target.value });
+            // if (e.target.value > playersAccountbalance){
+
+            // }
         }
+
+    
     }
 
     startGame = () => {
+        const playersAccountbalance = this.state.playerAccountBalance;
+        const playersBetAmount = this.state.betAmount;
         const toast = document.getElementById('toast');
         if (this.state.betAmount === 0) {
             toast.innerText = 'You have to place a bet on an amount to play this game';
             toast.className = 'show';
         } else {
-            toast.innerText = 'Click to Pick 5 random numbers';
-            toast.className = 'show';
-            const playGameBtn = document.getElementById('playGame');
-            const selectAmount = document.getElementById('betAmount');
-            const endGameBtn = document.getElementById('endGame');
-            const amountPlayed = parseInt(this.state.amountPlayed);
-            const amountBetOn = parseInt(this.state.betAmount);
-            let numberofGamesPlayed = this.state.gamesPlayed;
-            const ulForRandomNum = document.getElementById('disabled');
-            console.log("games Played", numberofGamesPlayed);
-            playGameBtn.disabled = true;
-            selectAmount.disabled = true;
-            endGameBtn.disabled = false;
-            this.setState({ pickedNumbers: [], winNumbers: [], lottoNos: [], gamesPlayed: (numberofGamesPlayed + 1), amountPlayed: (amountPlayed + amountBetOn) });
-            ulForRandomNum.id = "show";
+            if (playersBetAmount > playersAccountbalance){
+                alert("You don't have enough money in your account to place this amount on a bet. Recharge and try again or pick a lower amount");
+            } else {
+                toast.innerText = 'Click to Pick 5 random numbers';
+                toast.className = 'show';
+                const playGameBtn = document.getElementById('playGame');
+                const selectAmount = document.getElementById('betAmount');
+                const endGameBtn = document.getElementById('endGame');
+                const amountPlayed = parseInt(this.state.amountPlayed);
+                const amountBetOn = parseInt(this.state.betAmount);
+                let numberofGamesPlayed = this.state.gamesPlayed;
+                const ulForRandomNum = document.getElementById('disabled');
+                console.log("games Played", numberofGamesPlayed);
+                playGameBtn.disabled = true;
+                selectAmount.disabled = true;
+                endGameBtn.disabled = false;
+                this.setState({ pickedNumbers: [], winNumbers: [], lottoNos: [], gamesPlayed: (numberofGamesPlayed + 1), amountPlayed: (amountPlayed + amountBetOn) });
+                ulForRandomNum.id = "show";
+            }
         }
         setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 2000);
     }
@@ -237,6 +268,7 @@ export default class Lotto extends Component {
                                         <option value="1000"> #1,000</option>
                                         <option value="2000"> #2,000 </option>
                                         <option value="5000"> #5,000 </option>
+                                        <option value="10000"> #10,000 </option>
                                     </select>
                                     <button className="btn btn-block btn-info mt-2" id="playGame" onClick={this.startGame}> Play </button>
                                 </p>
