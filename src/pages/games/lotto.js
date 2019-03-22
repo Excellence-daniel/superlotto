@@ -209,7 +209,7 @@ export default class Lotto extends Component {
             Wins : ( wins + parseInt(this.state.wins)), 
             Losses : (losses + parseInt(this.state.losses)), 
             LossesCash : (lossesCash + parseInt(this.state.lossesCash)),
-            WinsCash : (winsCash + parseInt(this.state.winsCash))
+            WinsCash : (winsCash + parseInt(amountBalance))
         })
     }
 
