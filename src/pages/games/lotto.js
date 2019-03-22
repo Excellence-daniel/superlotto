@@ -22,12 +22,14 @@ export default class Lotto extends Component {
     }
 
     componentDidMount = () => {
-        var x = document.getElementById("toast");
+        const x = document.getElementById("toast");
+        const endGameBtn = document.getElementById('endGame');
+        endGameBtn.disabled = true;
         x.innerText = "Select just 2 random numbers..."
         x.className = "show";
         setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
-        var allnos = this.state.numbers;
-        for (var i = 1; i <= 30; i++) {
+        let allnos = this.state.numbers;
+        for (let i = 1; i <= 30; i++) {
             allnos.push(i);
             this.setState({ numbers: allnos });
         }
@@ -37,6 +39,7 @@ export default class Lotto extends Component {
         if (e.target.value) {
             this.setState({ betAmount: e.target.value })
         }
+        const toast = document.getElementById('toast');
     }
 
     startGame = () => {
@@ -215,6 +218,8 @@ export default class Lotto extends Component {
                                     <p> Amount Won(#) : <span id="toright"> {this.state.winsCash} </span></p>
                                     <p> Amount Lost (#) : <span id="toright"> {this.state.lossesCash} </span></p>
                                     <p> Amount Played (#) : <span id="toright"> {this.state.amountPlayed} </span></p>
+                                    <p> <button className = "btn btn-block btn-danger" id = "endgame"> End Game  </button></p>
+                                    <p id ="result"> </p>
                                 </p>
                                 <div id="toast">
                                     Toast Message
