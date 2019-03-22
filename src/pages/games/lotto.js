@@ -135,7 +135,7 @@ export default class Lotto extends Component {
                 if (guessed.length === 5) {
                     toast.innerText = "Finished Generating.";
                     if (winNums.length > 0) {
-                        self.setState({ winsCash: (parseInt(amountWon) + parseInt(amountBetOn)), wins: gamesWon + 1 });
+                        self.setState({ winsCash: (parseInt(amountWon) + (parseInt(amountBetOn) * parseInt(winNums.length))), wins: gamesWon + 1 });
                         toast.innerText = "You won " + winNums.length + " balls."
                         toast.className = "show";
                     } else {
@@ -148,7 +148,6 @@ export default class Lotto extends Component {
                     selectAmount.disabled = false;
                 }
             }
-            // setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 3000);
         }, 3000)
         setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 3000);
     };
