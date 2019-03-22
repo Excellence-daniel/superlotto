@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../header';
+import {Redirect} from 'react-router-dom';
 import { fireAuth, fireStore } from '../../config/index';
 
 export default class Lotto extends Component {
@@ -20,7 +21,8 @@ export default class Lotto extends Component {
             gamesPlayed: 0,
             numberOfBallsWon: 0,
             playerAccountBalance: 0, 
-            playerAccountID : ''
+            playerAccountID : '', 
+            redirect : false
         };
     }
 
@@ -44,6 +46,9 @@ export default class Lotto extends Component {
         console.log('User', user);
         if (user === null) {
             alert('Log in to play this game');
+            await fireAuth.auth().signOut();
+            localStorage.removeItem('UserLoggedIn');
+            this.setState({redirect : true});
         } else {
             const getPlayerData = await fireStore.collection('Accounts').where('Email', '==', user.email).get();
             const playerAccountBalance = getPlayerData.docs[0].data().AccountBalance;
@@ -194,6 +199,9 @@ export default class Lotto extends Component {
     }
 
     render() {
+        if (this.state.redirect === true){
+            return <Redirect to = "/login" />
+        }
         return (
             <div>
                 <Header />
