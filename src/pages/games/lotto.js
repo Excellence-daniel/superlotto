@@ -9,14 +9,15 @@ export default class Lotto extends Component {
             lottoNos: [],
             numbers: [],
             pickedNumbers: [],
-            winNumbers: [], 
-            betAmount : 0, 
-            wins : 0, 
-            losses : 0, 
-            winsCash : 0 , 
-            lossesCash : 0, 
-            amountPlayed : 0, 
-            gamesPlayed : 0
+            winNumbers: [],
+            betAmount: 0,
+            wins: 0,
+            losses: 0,
+            winsCash: 0,
+            lossesCash: 0,
+            amountPlayed: 0,
+            gamesPlayed: 0,
+            numberOfBallsWon: 0
         };
     }
 
@@ -33,17 +34,21 @@ export default class Lotto extends Component {
     };
 
     amounttoPlay = (e) => {
-        if (e.target.value){
-            this.setState({betAmount : e.target.value})
+        if (e.target.value) {
+            this.setState({ betAmount: e.target.value })
         }
     }
 
     startGame = () => {
         const playGameBtn = document.getElementById('playGame');
         const selectAmount = document.getElementById('betAmount');
+        const amountPlayed = parseInt(this.state.amountPlayed);
+        const amountBetOn = parseInt(this.state.betAmount);
+        let numberofGamesPlayed = this.state.gamesPlayed;
+        console.log("games Played", numberofGamesPlayed);
         playGameBtn.disabled = true;
         selectAmount.disabled = true;
-        this.setState({ pickedNumbers: [], winNumbers: [], lottoNos: [] });
+        this.setState({ pickedNumbers: [], winNumbers: [], lottoNos: [], gamesPlayed : (numberofGamesPlayed+1), amountPlayed : (amountPlayed + amountBetOn) });
         const ulForRandomNum = document.getElementById('disabled');
         ulForRandomNum.id = "show";
     }
@@ -51,10 +56,13 @@ export default class Lotto extends Component {
     generateLottoNumbers = () => {
         const playGameBtn = document.getElementById("playGame");
         const selectAmount = document.getElementById('betAmount');
+        const amountBetOn = this.state.betAmount;
         const x = document.getElementById("toast");
         const guessed = this.state.lottoNos;
         const pickednos = this.state.pickedNumbers;
         const winNums = this.state.winNumbers;
+        let amountWon = this.state.winsCash;
+        let amountLost = this.state.lossesCash;
         const self = this;
         setInterval(function () {
             if (guessed.length < 5) {
@@ -68,24 +76,27 @@ export default class Lotto extends Component {
                 console.log(index);
                 if (index) {
                     const numberWon = parseInt(newNumber);
-                    console.log('Found')
+                    console.log('Found');
                     winNums.push(numberWon);
                     self.setState({ winNumbers: winNums });
+                    self.setState({ numberOfBallsWon: winNums.length });
+                    // let newAmountWon = amountBetOn * winNums.length;
+                    // self.setState({ winsCash: newAmountWon });
                 }
 
                 if (guessed.length === 5) {
                     x.innerText = "Finished Generating...";
-                    setTimeout(function () { x.className = x.className.replace("show", ""); }, 1000);
-
                     if (winNums.length > 0) {
+                        self.setState({winsCash : (parseInt(amountWon) + parseInt(amountBetOn))});
+                        // self.setState({numberOfBallsWon : winNums.length});
                         x.innerText = "You won " + winNums.length + " balls."
                         x.className = "show";
-                        setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
                     } else {
+                        self.setState({lossesCash : (parseInt(amountLost )+ parseInt(amountBetOn))});
                         x.innerText = "You didn't win any ball."
                         x.className = "show";
-                        setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
                     }
+                    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
                     playGameBtn.innerText = 'Play Again ?';
                     playGameBtn.disabled = false;
                     selectAmount.disabled = false;
@@ -184,7 +195,8 @@ export default class Lotto extends Component {
                             <div className="card card-body">
                                 <p className="col-12">
                                     <label> Amount </label>
-                                    <select onChange={this.amounttoPlay} id = "betAmount">
+                                    <select onChange={this.amounttoPlay} id="betAmount">
+                                        <option value="" selected disabled> --Select An Amount To Bet On -- </option>
                                         <option value="500"> #500 </option>
                                         <option value="1000"> #1,000</option>
                                         <option value="2000"> #2,000 </option>
