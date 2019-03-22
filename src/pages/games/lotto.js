@@ -61,6 +61,8 @@ export default class Lotto extends Component {
         const guessed = this.state.lottoNos;
         const pickednos = this.state.pickedNumbers;
         const winNums = this.state.winNumbers;
+        let gamesWon = parseInt(this.state.wins);
+        let gamesLost = parseInt(this.state.losses);
         let amountWon = this.state.winsCash;
         let amountLost = this.state.lossesCash;
         const self = this;
@@ -87,12 +89,12 @@ export default class Lotto extends Component {
                 if (guessed.length === 5) {
                     x.innerText = "Finished Generating...";
                     if (winNums.length > 0) {
-                        self.setState({winsCash : (parseInt(amountWon) + parseInt(amountBetOn))});
+                        self.setState({winsCash : (parseInt(amountWon) + parseInt(amountBetOn)), wins : gamesWon+1});
                         // self.setState({numberOfBallsWon : winNums.length});
                         x.innerText = "You won " + winNums.length + " balls."
                         x.className = "show";
                     } else {
-                        self.setState({lossesCash : (parseInt(amountLost )+ parseInt(amountBetOn))});
+                        self.setState({lossesCash : (parseInt(amountLost) + parseInt(amountBetOn)), losses : gamesLost+1});
                         x.innerText = "You didn't win any ball."
                         x.className = "show";
                     }
