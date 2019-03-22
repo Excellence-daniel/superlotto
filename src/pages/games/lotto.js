@@ -22,50 +22,50 @@ export default class Lotto extends Component {
     }
 
     componentDidMount = () => {
-        const x = document.getElementById("toast");
+        const toast = document.getElementById("toast");
         const endGameBtn = document.getElementById('endGame');
         const generateLottoBtn = document.getElementById('generateLotto');
         generateLottoBtn.disabled = true;
         endGameBtn.disabled = true;
-        x.innerText = "Select just 2 random numbers..."
-        x.className = "show";
-        setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
+        toast.innerText = "Pick an amount to bet on.";
+        toast.className = "show";
         let allnos = this.state.numbers;
         for (let i = 1; i <= 30; i++) {
             allnos.push(i);
             this.setState({ numbers: allnos });
         }
+        setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 2000);
     };
 
     amounttoPlay = (e) => {
         if (e.target.value) {
             this.setState({ betAmount: e.target.value })
         }
-        // const toast = document.getElementById('toast');
-        // toast.innerText = ''
-        // toast.className = 'show';
     }
 
     startGame = () => {
         const toast = document.getElementById('toast');
-        if (this.state.betAmount === ''){
+        if (this.state.betAmount === 0) {
             toast.innerText = 'You have to place a bet on an amount to play this game';
             toast.className = 'show';
-            setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 1000);
+        } else {
+            toast.innerText = 'Click to Pick 5 random numbers';
+            toast.className = 'show';
+            const playGameBtn = document.getElementById('playGame');
+            const selectAmount = document.getElementById('betAmount');
+            const endGameBtn = document.getElementById('endGame');
+            const amountPlayed = parseInt(this.state.amountPlayed);
+            const amountBetOn = parseInt(this.state.betAmount);
+            let numberofGamesPlayed = this.state.gamesPlayed;
+            const ulForRandomNum = document.getElementById('disabled');
+            console.log("games Played", numberofGamesPlayed);
+            playGameBtn.disabled = true;
+            selectAmount.disabled = true;
+            endGameBtn.disabled = false;
+            this.setState({ pickedNumbers: [], winNumbers: [], lottoNos: [], gamesPlayed: (numberofGamesPlayed + 1), amountPlayed: (amountPlayed + amountBetOn) });
+            ulForRandomNum.id = "show";
         }
-        const playGameBtn = document.getElementById('playGame');
-        const selectAmount = document.getElementById('betAmount');
-        const endGameBtn = document.getElementById('endGame');
-        const amountPlayed = parseInt(this.state.amountPlayed);
-        const amountBetOn = parseInt(this.state.betAmount);
-        let numberofGamesPlayed = this.state.gamesPlayed;
-        const ulForRandomNum = document.getElementById('disabled');
-        console.log("games Played", numberofGamesPlayed);
-        playGameBtn.disabled = true;
-        selectAmount.disabled = true;
-        endGameBtn.disabled = false;
-        this.setState({ pickedNumbers: [], winNumbers: [], lottoNos: [], gamesPlayed : (numberofGamesPlayed+1), amountPlayed : (amountPlayed + amountBetOn) });
-        ulForRandomNum.id = "show";
+        setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 2000);
     }
 
     generateLottoNumbers = () => {
@@ -73,7 +73,7 @@ export default class Lotto extends Component {
         const selectAmount = document.getElementById('betAmount');
         const generateLottoBtn = document.getElementById('generateLotto');
         const amountBetOn = this.state.betAmount;
-        const x = document.getElementById("toast");
+        const toast = document.getElementById("toast");
         const guessed = this.state.lottoNos;
         const pickednos = this.state.pickedNumbers;
         const winNums = this.state.winNumbers;
@@ -85,8 +85,8 @@ export default class Lotto extends Component {
         const self = this;
         setInterval(function () {
             if (guessed.length < 5) {
-                x.innerText = "Generating Lotto Numbers Now...";
-                x.className = "show";
+                toast.innerText = "Generating Lotto Numbers Now.";
+                toast.className = "show";
                 var newNumber = Math.floor(Math.random() * 30);
                 guessed.push(parseInt(newNumber));
                 self.setState({ lottoNos: guessed });
@@ -99,54 +99,52 @@ export default class Lotto extends Component {
                     winNums.push(numberWon);
                     self.setState({ winNumbers: winNums });
                     self.setState({ numberOfBallsWon: winNums.length });
-                    // let newAmountWon = amountBetOn * winNums.length;
-                    // self.setState({ winsCash: newAmountWon });
                 }
 
                 if (guessed.length === 5) {
-                    x.innerText = "Finished Generating...";
+                    toast.innerText = "Finished Generating.";
                     if (winNums.length > 0) {
-                        self.setState({winsCash : (parseInt(amountWon) + parseInt(amountBetOn)), wins : gamesWon+1});
-                        // self.setState({numberOfBallsWon : winNums.length});
-                        x.innerText = "You won " + winNums.length + " balls."
-                        x.className = "show";
+                        self.setState({ winsCash: (parseInt(amountWon) + parseInt(amountBetOn)), wins: gamesWon + 1 });
+                        toast.innerText = "You won " + winNums.length + " balls."
+                        toast.className = "show";
                     } else {
-                        self.setState({lossesCash : (parseInt(amountLost) + parseInt(amountBetOn)), losses : gamesLost+1});
-                        x.innerText = "You didn't win any ball."
-                        x.className = "show";
+                        self.setState({ lossesCash: (parseInt(amountLost) + parseInt(amountBetOn)), losses: gamesLost + 1 });
+                        toast.innerText = "You didn't win any ball."
+                        toast.className = "show";
                     }
-                    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
                     playGameBtn.innerText = 'Play Again ?';
                     playGameBtn.disabled = false;
                     selectAmount.disabled = false;
                 }
             }
+            // setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 3000);
         }, 3000)
+        setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 3000);
     };
 
     playerPickNumbers = e => {
         const ulForRandomNum = document.getElementById("show");
         const generateLottoBtn = document.getElementById('generateLotto');
+        const toast = document.getElementById("toast");
         let pickednos = this.state.pickedNumbers;
         const newNum = e.target.id;
         console.log(newNum);
 
-        if (pickednos.length < 2) {
+        if (pickednos.length < 5) {
             pickednos.push(parseInt(newNum));
             this.setState({ pickedNumbers: pickednos });
 
-            if (pickednos.length === 2) {
+            if (pickednos.length === 5) {
                 generateLottoBtn.disabled = false;
-                const x = document.getElementById("toast");
                 ulForRandomNum.id = "disabled";
-                x.innerText = "Generate Lotto Numbers..."
-                x.className = "show";
-                setTimeout(function () { x.className = x.className.replace("show", ""); }, 4000);
+                toast.innerText = "Generate Lotto Numbers."
+                toast.className = "show";
+                setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 4000);
             }
         }
     };
 
-    endGameAndGetResult = () =>{
+    endGameAndGetResult = () => {
         const result = document.getElementById('result');
         const generateLottoBtn = document.getElementById('generateLotto');
         const selectAmount = document.getElementById('betAmount');
@@ -160,7 +158,7 @@ export default class Lotto extends Component {
         playGameBtn.disabled = true;
         endGameBtn.disabled = true;
         ulForRandomNum.disabled = true;
-        result.innerText = `Your final balance is ${amountBalance}`;
+        result.innerText = `Your final balance is #${amountBalance}.`;
     }
 
     render() {
@@ -225,7 +223,7 @@ export default class Lotto extends Component {
                             </div>
 
                             <div className="col-12 mt-4">
-                                <button className="btn btn-block btn-info" id = "generateLotto" onClick={this.generateLottoNumbers}> Generate Lotto Numbers </button>
+                                <button className="btn btn-block btn-info" id="generateLotto" onClick={this.generateLottoNumbers}> Generate Lotto Numbers </button>
                             </div>
 
                         </div>
@@ -251,8 +249,8 @@ export default class Lotto extends Component {
                                     <p> Amount Won(#) : <span id="toright"> {this.state.winsCash} </span></p>
                                     <p> Amount Lost (#) : <span id="toright"> {this.state.lossesCash} </span></p>
                                     <p> Amount Played (#) : <span id="toright"> {this.state.amountPlayed} </span></p>
-                                    <p> <button className = "btn btn-block btn-danger" id = "endGame" onClick = {this.endGameAndGetResult}> End Game  </button></p>
-                                    <p id ="result"> </p>
+                                    <p> <button className="btn btn-block btn-danger" id="endGame" onClick={this.endGameAndGetResult}> End Game  </button></p>
+                                    <p id="result"> </p>
                                 </p>
                                 <div id="toast">
                                     Toast Message
