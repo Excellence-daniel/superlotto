@@ -19,7 +19,8 @@ export default class Lotto extends Component {
             amountPlayed: 0,
             gamesPlayed: 0,
             numberOfBallsWon: 0,
-            playerAccountBalance: 0
+            playerAccountBalance: 0, 
+            playerAccountID : ''
         };
     }
 
@@ -46,7 +47,8 @@ export default class Lotto extends Component {
         } else {
             const getPlayerData = await fireStore.collection('Accounts').where('Email', '==', user.email).get();
             const playerAccountBalance = getPlayerData.docs[0].data().AccountBalance;
-            this.setState({playerAccountBalance});
+            const playerAccountID = getPlayerData.docs[0].id;
+            this.setState({playerAccountBalance, playerAccountID});
 
             playGameBtn.disabled = false;
             selectAmount.disabled = false;
@@ -57,18 +59,12 @@ export default class Lotto extends Component {
     };
 
     amounttoPlay = (e) => {
-        // const playersAccountbalance = this.state.playerAccountBalance;
         if (e.target.value) {
             this.setState({ betAmount: e.target.value });
-            // if (e.target.value > playersAccountbalance){
-
-            // }
         }
-
-    
     }
 
-    startGame = () => {
+    startGame = async () => {
         const playersAccountbalance = this.state.playerAccountBalance;
         const playersBetAmount = this.state.betAmount;
         const toast = document.getElementById('toast');
@@ -79,6 +75,10 @@ export default class Lotto extends Component {
             if (playersBetAmount > playersAccountbalance){
                 alert("You don't have enough money in your account to place this amount on a bet. Recharge and try again or pick a lower amount");
             } else {
+                const newBalance = this.state.playerAccountBalance - playersBetAmount;
+                await fireStore.collection('Accounts').doc(this.state.playerAccountID).update({
+                    AccountBalance : newBalance
+                });
                 toast.innerText = 'Click to Pick 5 random numbers';
                 toast.className = 'show';
                 const playGameBtn = document.getElementById('playGame');
@@ -91,7 +91,7 @@ export default class Lotto extends Component {
                 console.log("games Played", numberofGamesPlayed);
                 playGameBtn.disabled = true;
                 selectAmount.disabled = true;
-                endGameBtn.disabled = false;
+                endGameBtn.disabled = true;
                 this.setState({ pickedNumbers: [], winNumbers: [], lottoNos: [], gamesPlayed: (numberofGamesPlayed + 1), amountPlayed: (amountPlayed + amountBetOn) });
                 ulForRandomNum.id = "show";
             }
@@ -102,6 +102,7 @@ export default class Lotto extends Component {
     generateLottoNumbers = () => {
         const playGameBtn = document.getElementById("playGame");
         const selectAmount = document.getElementById('betAmount');
+        const endGameBtn = document.getElementById('endGame');
         const generateLottoBtn = document.getElementById('generateLotto');
         const amountBetOn = this.state.betAmount;
         const toast = document.getElementById("toast");
@@ -143,6 +144,7 @@ export default class Lotto extends Component {
                         toast.innerText = "You didn't win any ball."
                         toast.className = "show";
                     }
+                    endGameBtn.disabled = false;
                     playGameBtn.innerText = 'Play Again ?';
                     playGameBtn.disabled = false;
                     selectAmount.disabled = false;
