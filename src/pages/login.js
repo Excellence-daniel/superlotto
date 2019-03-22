@@ -68,7 +68,7 @@ export default class Login extends Component {
                 <Header />
                 <div className="container-fluid mt-6">
                     <div className="row">
-                        <div className="col-12 col-md-6 mt-5">
+                        <div className="col-12 col-md-4 mt-5">
                             <center><h2> Login Form </h2></center>
                             <div className="row">
                                 <p className="col-12">
@@ -85,7 +85,7 @@ export default class Login extends Component {
                                 </p>
                             </div>
                         </div>
-                        <div className="col-12 col-md-6">
+                        <div className="col-12 col-md-8">
                             <img src="https://superlottong.com/Content/assets/superlotto/img/web_banner1.jpg" style = {{width : '100%'}} className = "img-fluid"/>
                     </div>
                     </div>
