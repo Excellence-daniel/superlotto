@@ -8,9 +8,7 @@ import Login from '../login';
 import Account from '../account';
 import Games from '../games';
 import Lotto from '../games/lotto';
-// import JoinClub from './club/joinClub'
-
-// import ViewProfile from './profile/viewProfile'
+import ConfirmEmail from '../confirmEmail';
 
 export default function Routerr (){
     return (
@@ -22,17 +20,10 @@ export default function Routerr (){
                 <Route exact path = '/account' component = {Account}/>
                 <Route exact path = '/games' component = {Games}/>
                 <Route exact path = '/lotto' component = {Lotto}/>
+                <Route exact path = '/confirmEmail' component = {ConfirmEmail}/>
                 
-                {/* <Route exact path = "/" component = {LandingPage}/>                
+                {/* <Route exact path = "/club/editClub" render ={(props) => <EditClub {...props}/>}/> */}
 
-                <Route path = "/club/viewClubs" component = {ViewClubs}/>
-                <Route exact path = "/club/addMembers" component = {AddMembers}/>
-                <Route exact path = "/club/createClub" component = {CreateClub}/>
-                <Route exact path = "/club/editClub" render ={(props) => <EditClub {...props}/>}/>
-                <Route exact path = "/club/joinClub" component = {JoinClub}/>
-
-                
-                <Route exact path = "/profile/viewProfile" component = {ViewProfile}/> */}
             </div>  
         </Router>
     )
