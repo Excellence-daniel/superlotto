@@ -483,10 +483,10 @@ h3 {
   .wins-balls{
     position: relative;
     /* background: radial-gradient(at top left, #ff5f6d, #ffc371); */
-    background: white;
-    border: 1px solid white;
+    background: black;
+    border: 1px solid black;
     margin: 3px;
-    color: black;
+    color: white;
     outline: none;
     padding: 9px;
     float: left;
@@ -551,4 +551,14 @@ h3 {
 @keyframes fadeout {
   from {bottom: 30px; opacity: 1;}
   to {bottom: 0; opacity: 0;}
+}
+
+ul#disabled{
+    pointer-events:none;
+    opacity:0.7;
+}
+
+ul#show{
+    opacity : 1px;
+    pointer-events : all;
 }
