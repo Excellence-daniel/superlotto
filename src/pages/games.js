@@ -7,24 +7,12 @@ export default class Games extends Component {
         return (
             <div>
                 <Header />
-                <div className="container-fluid">
+                <div className="container">
                     <div className="row">
-                    <div className="col-12 col-md-4 frame zoomin">
+                    <div className="col-12 col-md-3 frame zoomin">
                         <Link to='/lotto'>
                                 <h3> Lotto Balls </h3>
-                                <img src = "https://superlottong.com/Content/assets/superlotto/img/live-games/lucky-5.jpg" alt="Lotto Balls" className="img-fluid" />
-                        </Link>
-                        </div>
-                        <div className="col-12 col-md-4 frame zoomin">
-                        <Link to='/games/lottoball'>
-                                <h3> Game 2 </h3>
-                                <img src = "https://superlottong.com/Content/assets/superlotto/img/live-games/lucky-6.jpg" alt="Lotto Balls" className="img-fluid" />
-                        </Link>
-                        </div>
-                        <div className="col-12 col-md-4 frame zoomin">
-                        <Link to='/games/lottoball'>
-                                <h3> Game 3 </h3>
-                                <img src = "https://superlottong.com/Content/assets/superlotto/img/live-games/lucky-7.jpg" alt="Lotto Balls" className="img-fluid" />
+                                <img src = "img/play-lotto.png" alt="Lotto Balls" className="img-fluid" />
                         </Link>
                         </div>
                     </div>
