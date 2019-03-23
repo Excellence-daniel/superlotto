@@ -63,7 +63,7 @@ export default class Header extends Component {
                                         </li>
 
                                         <li class="nav-item active">
-                                            <Link to = "/games">
+                                            <Link to = "/lotto">
                                                 <a> Play Game  </a>
                                             </Link>
                                         </li>
@@ -105,7 +105,7 @@ export default class Header extends Component {
                                         </li>
 
                                         <li class="nav-item mt-2 active">
-                                            <Link to = "/games">
+                                            <Link to = "/lotto">
                                                 <a> Play Game  </a>
                                             </Link>
                                         </li>
@@ -159,7 +159,7 @@ export default class Header extends Component {
                                 <div class="col-12 mt-3">
                                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0" style={{ float: 'right' }}>
                                         <li class="nav-item active">
-                                            <Link to = "/games">
+                                            <Link to = "/lotto">
                                                 <a> Play Game  </a>
                                             </Link>
                                         </li>
@@ -209,7 +209,7 @@ export default class Header extends Component {
                                         </li> */}
 
                                         <li class="nav-item mt-2 active">
-                                            <Link to = "/games">
+                                            <Link to = "/lotto">
                                                 <a> Play Game  </a>
                                             </Link>
                                         </li>
