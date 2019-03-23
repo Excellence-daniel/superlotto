@@ -177,7 +177,7 @@ export default class Header extends Component {
 
                     {/* for large screen // */}
 
-                    {/* //for small screens */}
+                    {/* for small screens */}
                     <nav class="navbar navbar-expand-lg navbar-light for-small">
                         <Link to="/">
                             <a class="navbar-brand">
