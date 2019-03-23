@@ -1,6 +1,8 @@
 const functions = require('firebase-functions');
-
+const admin = require('firebase-admin');
+admin.initializeApp();
 const SENDGRID_API_KEY = functions.config().sendgrid.key;
+console.log(SENDGRID_API_KEY);
 
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(SENDGRID_API_KEY);
@@ -15,9 +17,9 @@ exports.validateNewEmail = functions.firestore
         if (user) {
             const msg = {
                 to: user.Email,
-                from: 'SuperLotto',
+                from: 'SuperLotto@gmail.com',
                 subject: 'Email Verification : ',
-                // text: `Hey ${toName}. You have a new follower!!! `,
+                // text: `Hey ${toName}. You have a new follower!!! `
                 html: `
                             <strong> Hello ${user.Name}. Welcome to SuperLotto App. You have to verify your email to enable you access to particular pages. Click on the button below to confirm your email. Thank you.</strong>
                                 <br/><br/><br/>
@@ -29,7 +31,8 @@ exports.validateNewEmail = functions.firestore
             sgMail.send(msg)
                 .then(() => console.log('Email.sent'))
                 .catch((e) => {
-                    console.log(e)
+                    console.log(e);
+                    console.log(e.message);
                 })
         }
     }))
