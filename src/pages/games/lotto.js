@@ -286,7 +286,7 @@ export default class Lotto extends Component {
                             <div className="card card-body">
                                 <p className="col-12">
                                     <label> Amount </label>
-                                    <select onChange={this.amounttoPlay} id="betAmount">
+                                    <select className = "form-control" onChange={this.amounttoPlay} id="betAmount">
                                         <option value="" selected disabled> --Select An Amount To Bet On -- </option>
                                         <option value="500"> #500 </option>
                                         <option value="1000"> #1,000</option>
