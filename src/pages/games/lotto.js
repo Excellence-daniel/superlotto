@@ -45,7 +45,7 @@ export default class Lotto extends Component {
         const user = await fireAuth.auth().currentUser;
         console.log('User', user);
         if (user === null) {
-            alert('Log in to play this game');
+            alert('Log in to play game');
             await fireAuth.auth().signOut();
             localStorage.removeItem('UserLoggedIn');
             this.setState({redirect : true});
@@ -237,8 +237,8 @@ export default class Lotto extends Component {
                                 </div>
                             </div>
 
-                            <div className="col-12 mt-3">
-                                <div className="row">
+                            <div className = "col-12 mt-3">
+                                <div className = "row">
                                     <div className="col-12 col-md-5">
                                         <div className="card card-body">
                                             <h2> Picked Numbers </h2>
@@ -273,7 +273,6 @@ export default class Lotto extends Component {
                                             ))}
                                         </ul>
                                     </div>
-
                                 </div>
                             </div>
 
@@ -305,7 +304,7 @@ export default class Lotto extends Component {
                                     <p> Amount Won(#) : <span id="toright"> {this.state.winsCash} </span></p>
                                     <p> Amount Lost (#) : <span id="toright"> {this.state.lossesCash} </span></p>
                                     <p> Amount Played (#) : <span id="toright"> {this.state.amountPlayed} </span></p>
-                                    <p> <button className="btn btn-block btn-danger" id="endGame" onClick={this.endGameAndGetResult}> End Game  </button></p>
+                                    <p> <button className="btn btn-block btn-danger" id="endGame" onClick={this.endGameAndGetResult}> End Game </button></p>
                                     <p id="result"> </p>
                                 </p>
                                 <div id="toast">
