@@ -6,7 +6,7 @@ import App from '../index';
 import SignUp from '../signup';
 import Login from '../login';
 import Account from '../account';
-import Games from '../games';
+// import Games from '../games';
 import Lotto from '../games/lotto';
 import ConfirmEmail from '../confirmEmail';
 
@@ -18,7 +18,7 @@ export default function Routerr (){
                 <Route exact path = '/signup' component = {SignUp}/>
                 <Route exact path = '/login' component = {Login}/>
                 <Route exact path = '/account' component = {Account}/>
-                <Route exact path = '/games' component = {Games}/>
+                {/* <Route exact path = '/games' component = {Games}/> */}
                 <Route exact path = '/lotto' component = {Lotto}/>
                 <Route exact path = '/confirmEmail' component = {ConfirmEmail}/>
                 
