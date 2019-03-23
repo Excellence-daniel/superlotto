@@ -28,9 +28,14 @@ export default class Login extends Component {
     }
 
     handleLogin = async () => {
+        const loginBtn = document.getElementById('loginBtn');
+        loginBtn.disabled = true;
+        loginBtn.innerHTML = `<img src = 'img/loader.gif' alt = 'loader' style= 'width:5%'/>`;
         const { email, password } = this.state;
         if (email === '' || password === '') {
             alert('Complete all fields')
+            loginBtn.innerText = 'Login';
+            loginBtn.disabled = false;
         } else {
             if (validator.isEmail(email)){
                 try {
@@ -39,23 +44,29 @@ export default class Login extends Component {
                     if (getUserQuery.docs[0].data().EmailVerified){
                         var user = await fireAuth.auth().currentUser;
                         localStorage.setItem('UserLoggedIn' , true);
-                        alert('logged in')
+                        alert('Login Successful');
                         this.setState({redirect : true})
                         console.log(user);
-                        console.log('Logged in')
+                        console.log('Logged in');
                     } else {
                         alert('You cannot login until you verify your email.')
                         await fireAuth.auth().signOut();
                         localStorage.removeItem('UserLoggedIn');
                         console.log('Not logged in')
+                        loginBtn.innerText = 'Login';
+                        loginBtn.disabled = false;
                     }
                 }
                 catch (err) {
                     console.log(err.message);
                     alert(err.message);
+                    loginBtn.innerText = 'Login';
+                    loginBtn.disabled = false;
                 }
             } else {
                 alert('Email Format Wrong! Enter Valid Email')
+                loginBtn.innerText = 'Login';
+                loginBtn.disabled = false;
             }
         }
     }
@@ -73,20 +84,20 @@ export default class Login extends Component {
                             <div className="row">
                                 <p className="col-12">
                                     <label> Email Address </label>
-                                    <input onChange={this.handleEmailInput} type="email" placeholder="you@yourmail.com" />
+                                    <input onChange={this.handleEmailInput} className = "form-control" type="email" placeholder="you@yourmail.com" />
                                 </p>
 
                                 <p className="col-12">
                                     <label> Password </label>
-                                    <input onChange={this.handlePassWordInput} type="password" />
+                                    <input onChange={this.handlePassWordInput} className = "form-control" type="password" />
                                 </p>
                                 <p className="col-12">
-                                    <button onClick={this.handleLogin} className="btn btn-info btn-block"> Login </button>
+                                    <button onClick={this.handleLogin} id = 'loginBtn' className="btn btn-info btn-block"> Login </button>
                                 </p>
                             </div>
                         </div>
                         <div className="col-12 col-md-8">
-                            <img src="https://superlottong.com/Content/assets/superlotto/img/web_banner1.jpg" style = {{width : '100%'}} className = "img-fluid"/>
+                            <img src="img/winning.jpg" style = {{width : '100%'}} className = "img-fluid"/>
                     </div>
                     </div>
                 </div>
