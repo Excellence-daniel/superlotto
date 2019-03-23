@@ -47,28 +47,13 @@ export default class Header extends Component {
                                 <center>
                                     <Link to="/">
                                         <a class="navbar-brand">
-                                            <img src="https://superlottong.com/Content/assets/superlotto/img/logo.png" alt="logo" class="img-fluid" />
+                                            <img src="img/lotto-logo.png" alt="logo" class="img-fluid" style = {{width : '60%'}} />
                                         </a>
                                     </Link>
                                 </center>
                             </div>
                             <div class="col-2"></div>
                             <div class="col-7">
-                                <div class="col-12" style={{ float: 'right' }}>
-                                    <p style={{ float: 'right' }}>
-                                        <div class="row">
-                                            <div className="col-9">
-                                                <h4> Oyeniran Excellence D. </h4>
-                                                <h6> oyeniranexcellenced@gmail.com</h6>
-                                            </div>
-                                            <div className="col-3">
-                                                <Link to="/account">
-                                                    <i className="fas fa-user-circle fa-3x"></i>
-                                                </Link>
-                                            </div>
-                                        </div>
-                                    </p>
-                                </div>
                                 <div class="col-12 mt-3">
                                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0" style={{ float: 'right' }}>
                                         <li class="nav-item" disabled>
@@ -103,29 +88,14 @@ export default class Header extends Component {
                     <nav class="navbar navbar-expand-lg navbar-light for-small">
                         <Link to="/">
                             <a class="navbar-brand">
-                                <img src="https://superlottong.com/Content/assets/superlotto/img/logo.png" alt="logo" class="img-fluid" />
+                                <img src="img/lotto-logo.png" alt="logo" class="img-fluid" style = {{width : '60%'}} />
                             </a>
                         </Link>
                         <button class="navbar-toggler dropdown-btn-tog" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
-                        <div class="collapse navbar-collapse" id="navbarNav">
+                        <div class="collapse navbar-collapse" style = {{marginTop : '-25px;'}} id="navbarNav">
                             <center>
-                                <div class="col-12">
-                                    <p>
-                                        <div class="row">
-                                            <div className="col-4" style={{ marginRight: '0px', marginLeft: '0px' }}>
-                                                <Link to="/account" style={{ float: 'right' }}>
-                                                    <i className="fas fa-user-circle fa-3x"></i>
-                                                </Link>
-                                            </div>
-                                            <div className="col-8 mt-2" style={{ marginRight: '0px', marginLeft: '0px' }}>
-                                                <h4 style={{ float: 'left' }}> Oyeniran Excellence D. </h4>
-                                                <h6 style={{ float: 'left' }}> oyeniranexcellenced@gmail.com</h6>
-                                            </div>
-                                        </div>
-                                    </p>
-                                </div>
                                 <div class="col-12 mt-3">
                                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                                         <li class="nav-item" disabled>
@@ -169,7 +139,7 @@ export default class Header extends Component {
                             <div class="col-3">
                                 <Link to="/">
                                     <a class="navbar-brand">
-                                        <img src="https://superlottong.com/Content/assets/superlotto/img/logo.png" alt="logo" class="img-fluid" />
+                                        <img src="img/lotto-logo.png" alt="logo" class="img-fluid" style = {{width : '60%'}} />
                                     </a>
                                 </Link>
                             </div>
@@ -188,12 +158,6 @@ export default class Header extends Component {
                                 </div>
                                 <div class="col-12 mt-3">
                                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0" style={{ float: 'right' }}>
-                                        {/* <li class="nav-item" disabled>
-                                            <Link to="/account">
-                                                <a> Account </a>
-                                            </Link>
-                                        </li> */}
-
                                         <li class="nav-item active">
                                             <Link to = "/games">
                                                 <a> Play Game  </a>
@@ -217,13 +181,13 @@ export default class Header extends Component {
                     <nav class="navbar navbar-expand-lg navbar-light for-small">
                         <Link to="/">
                             <a class="navbar-brand">
-                                <img src="https://superlottong.com/Content/assets/superlotto/img/logo.png" alt="logo" class="img-fluid" />
+                                <img src="img/lotto-logo.png" alt="logo" class="img-fluid" style = {{width : '60%'}} />
                             </a>
                         </Link>
                         <button class="navbar-toggler dropdown-btn-tog" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
-                        <div class="collapse navbar-collapse" id="navbarNav">
+                        <div class="collapse navbar-collapse" style = {{marginTop : '-25px;'}} id="navbarNav">
                             <center>
                                 <div class="col-12">
                                     <p>
