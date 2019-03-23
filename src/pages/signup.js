@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import validator from 'validator';
 import uuid from 'uuid';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Header from './header';
 import { fireAuth, fireStore } from '../config/index';
 
@@ -16,7 +16,7 @@ export default class SignUp extends Component {
             phonenumber: '',
             password: '',
             dateofbirth: '',
-            redirect : false
+            redirect: false
         }
     }
 
@@ -62,23 +62,16 @@ export default class SignUp extends Component {
         }
     }
 
-    handleConfirmPassword = (e) => {
-        var signupBtn = document.getElementById('signupBtn')
-        if (e.target.value) {
-            if (e.target.value !== this.state.password) {
-                console.log("Wrong Password");
-                signupBtn.disabled = true;
-            } else {
-                signupBtn.disabled = false;
-            }
-        }
-    }
-
     signUp = async () => {
+        const signupBtn = document.getElementById('signupBtn');
+        signupBtn.disabled = true;
+        signupBtn.innerHTML = `<img src = 'img/loader.gif' className = 'img-fluid' alt = 'loader' style= 'width:5%'/>`;
         const { firstname, lastname, email, password, dateofbirth, address, phonenumber } = this.state;
         if (firstname === '' || lastname === '' || email === '' || password === '' || dateofbirth === '' || address === '' || phonenumber === '') {
             console.log('Complete all fields');
             alert('Complete all fields');
+            signupBtn.innerText = 'Sign Up';
+            signupBtn.disabled = false;
         } else {
             if (validator.isEmail(email)) {
                 const userToken = uuid.v4();
@@ -91,8 +84,8 @@ export default class SignUp extends Component {
                         Address: address,
                         PhoneNumber: phonenumber,
                         Password: password,
-                        UserToken: userToken, 
-                        EmailVerified : false
+                        UserToken: userToken,
+                        EmailVerified: false
                     })
                     await fireStore.collection('Accounts').add({
                         Name: firstname + ' ' + lastname,
@@ -104,93 +97,84 @@ export default class SignUp extends Component {
                         LossesCash: 0,
                         UserToken: userToken
                     })
+                    await fireAuth.auth().signOut();
                     console.log('Success!')
                     alert('An account has been created for you. Verfiy your email to login.')
-                    this.setState({redirect : true})
+                    this.setState({ redirect: true })
                 }
                 catch (err) {
                     console.log(err.message);
                     alert('Error.' + err.message);
+                    signupBtn.innerText = 'Sign Up';
+                    signupBtn.disabled = false;
                 }
             } else {
-                alert('Invalid Email. Use a correct email')
+                alert('Invalid Email. Use a correct email');
+                signupBtn.innerText = 'Sign Up';
+                signupBtn.disabled = false;
             }
         }
     }
 
     render() {
-        if (this.state.redirect === true){
-            return <Redirect to = "/login"/>
+        if (this.state.redirect === true) {
+            return <Redirect to="/login" />
         }
         return (
             <div>
                 <Header />
-                <div className="container mt-4">
+                <div className="container">
                     <center><h1> Sign Up Form </h1></center>
                     <div className="row">
                         <p className="col-12 col-md-6">
                             <label> First Name </label>
-                            <input onChange={this.handleFirstNameInput} type="text" />
+                            <input onChange={this.handleFirstNameInput} className="form-control" type="text" />
                         </p>
 
                         <p className="col-12 col-md-6">
                             <label> Last Name </label>
-                            <input onChange={this.handleLastNameInput} type="text" />
+                            <input onChange={this.handleLastNameInput} className="form-control" type="text" />
                         </p>
                     </div>
 
                     <div className="row">
                         <p className="col-12 col-md-6">
                             <label> Address </label>
-                            <input onChange={this.handleAddressInput} type="text" />
+                            <input onChange={this.handleAddressInput} className="form-control" type="text" />
                         </p>
 
                         <p className="col-12 col-md-6">
                             <label> Email </label>
-                            <input onChange={this.handleEmailInput} placeholder = "you@yourmail.com" type="email" />
+                            <input onChange={this.handleEmailInput} className="form-control" placeholder="you@yourmail.com" type="email" />
                         </p>
                     </div>
 
                     <div className="row">
                         <p className="col-12 col-md-6">
                             <label> Phone Number </label>
-                            <input onChange={this.handlePhoneNumberInput} type="text" />
+                            <input onChange={this.handlePhoneNumberInput} className="form-control" type="text" />
                         </p>
 
                         <p className="col-12 col-md-6">
                             <label> Date of Birth </label>
-                            <input onChange={this.handleDateOfBirthInput} type="date" />
+                            <input onChange={this.handleDateOfBirthInput} className="form-control" type="date" />
                         </p>
                     </div>
 
                     <div className="row">
                         <p className="col-12 col-md-6">
                             <label> Password </label>
-                            <input onChange={this.handlePasswordInput} type="password" />
-
-                            <p>
-                                <b> Password Strength </b>
-                                <li> More than 6 characters </li>
-                                <li> Must have a numeric character </li>
-                                <li> Must have a special character </li>
-                            </p>
-                        </p>
-
-                        <p className="col-12 col-md-6">
-                            <label> Confirm Password </label>
-                            <input onChange={this.handleConfirmPassword} type="password" />
+                            <input onChange={this.handlePasswordInput} className="form-control" type="password" />
                         </p>
                     </div>
 
                     <div className="row">
-                        <p>
-                            <label>
-                                <input type="checkbox" />
-                                <span> I am above 18 years of age and I accept the Terms and Conditions.</span>
-                            </label>
+                        <p classname = "col-12">
+                            <input type="checkbox" />
+                            <span> I am above 18 years of age and I accept the Terms and Conditions.</span>
                         </p>
                     </div>
-                    <button className="btn btn-success btn-block" id="signupBtn" onClick={this.signUp}> SIGN UP </button>
+                    <button className="btn btn-success btn-block" id="signupBtn" onClick={this.signUp}> Sign Up </button>
 
                 </div>
             </div>
