@@ -20,12 +20,13 @@ export default class ConfirmEmail extends Component {
             userDocID = getUser.docs[0].id;
             if (isEmailVerified){
                 alert('Email Verified already.')
+                this.setState({redirect : true});
             } else {
                 await fireStore.collection('Users').doc(userDocID).update({
                     EmailVerified : true
                 });
                 alert('Email Verification Successful');
-                this.window.close();
+                this.setState({redirect : true});
             }
         }
         // console.log(getURL);
