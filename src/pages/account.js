@@ -21,12 +21,14 @@ export default class Account extends Component {
             winsCash: 0,
             losses: 0,
             lossesCash: 0,
-            userId : ''
+            userId: ''
         }
     }
 
     componentDidMount = async () => {
-        var closebtn = document.getElementById('closebtn');
+        const closebtn = document.getElementById('closebtn');
+        const loader = document.getElementById('loader');
+        loader.style.display = 'block';
         closebtn.disabled = true;
         const user = await fireAuth.auth().currentUser;
         if (user) {
@@ -41,9 +43,10 @@ export default class Account extends Component {
                     userName: userData.Name, userEmail: userData.Email, wins: userData.Wins, winsCash: userData.WinsCash,
                     losses: userData.Losses, lossesCash: userData.LossesCash, accountBalance: userData.AccountBalance, userId
                 });
+                loader.style.display = 'none';
             } else {
                 alert('User does not exist');
-                this.setState({ redirect: true })
+                this.setState({ redirect: true });
             }
         } else {
             alert('Login to access this page')
@@ -88,9 +91,9 @@ export default class Account extends Component {
                     var formerAmount = parseInt(this.state.accountBalance);
                     var rechargedAmount = parseInt(amount);
                     var newAmount = formerAmount + rechargedAmount;
-                    this.setState({ accountBalance : newAmount })
+                    this.setState({ accountBalance: newAmount })
                     await fireStore.collection('Accounts').doc(this.state.userId).update({
-                        AccountBalance : newAmount
+                        AccountBalance: newAmount
                     })
                     var success = `<center><img src = 'img/success.png' style = "width : 60%" class = 'img-fluid'/> <br/><br/> <h4> Successful Transaction </h4></center>`
                     modalBody.innerHTML = success
@@ -105,6 +108,58 @@ export default class Account extends Component {
         }
     }
 
+    raffleDraw = async () => {
+        const luckGameBtn = document.getElementById('luckGameBtn');
+        let message;
+        luckGameBtn.disabled = true;
+        luckGameBtn.innerHTML = `<img src ='img/loader.gif' alt = 'loader' className = 'img-fluid' style = 'width:5%'/>`
+        const allGamesPlayed = parseInt(this.state.wins + this.state.losses);
+        const luckNumber = Math.floor(Math.random() * 5);
+        console.log(luckNumber)
+        setTimeout(function async() {
+            if (this.state.winsCash < 70000) {
+                alert('You cannot play the luck game with less than #70,000 gotten from your wins');
+                luckGameBtn.disabled = false;
+                luckGameBtn.innerText = 'Play Luck Game';
+            } else {
+                if (allGamesPlayed < 5) {
+                    alert('You need to play more games to qualify for this draw');
+                    luckGameBtn.disabled = false;
+                    luckGameBtn.innerText = 'Play Luck Game';
+                } else {
+                    switch (luckNumber) {
+                        case 1:
+                            message = 'You won a house';
+                            break;
+                        case 2:
+                            message ='You won a car!';
+                            break;
+                        case 3:
+                            message = 'You won a full kitchen set';
+                            break;
+                        case 4:
+                           message = 'You won a generator';
+                            break;
+                        case 5:
+                            message = 'You won a laptop';
+                            break;
+                        default:
+                            message = "We're sorry. Today is not your lucky day!";
+                    }
+                    luckGameBtn.disabled = false;
+                    luckGameBtn.innerText = 'Play Luck Game';
+                    fireStore.collection('Accounts').doc(this.state.userId).update({
+                        WinsCash: 0
+                    })
+                    .then(() => {
+                        alert(message); 
+                        this.setState({redirect : true})
+                    })
+                }
+            }
+        }, 4000)
+    }
+
     render() {
         if (this.state.redirect) {
             return <Redirect to="/" />
@@ -117,19 +172,19 @@ export default class Account extends Component {
                     <div className="row card card-body">
                         <p className="col-12">
                             <label> Full Name </label>
-                            <input type="text" value = {this.state.userName} disabled />
+                            <input type="text" className="form-control" value={this.state.userName} disabled />
                         </p>
 
                         <p className="col-12">
                             <label> Email </label>
-                            <input type="email" value = {this.state.userEmail} disabled />
+                            <input type="email" className="form-control" value={this.state.userEmail} disabled />
                         </p>
 
                         <div className="row" style={{ fontSize: '20px', padding: '15px' }}>
                             <p className="col-12">
                                 Account Balance (#) : <span> {this.state.accountBalance} </span>
 
-                                <button style={{ marginLeft: '10%' }} type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"> Recharge Account </button>
+                                <button type="button" className="btn btn-primary col-12" data-toggle="modal" data-target="#exampleModalCenter"> Recharge Account </button>
                             </p>
 
                             <p className="col-12 col-md-6">
@@ -147,6 +202,14 @@ export default class Account extends Component {
                             <p className="col-12 col-md-6">
                                 Losses (#) : <span> {this.state.lossesCash} </span>
                             </p>
+
+                            <p className="col-12">
+                                <button className="btn btn-block btn-warning" id='luckGameBtn' onClick={this.raffleDraw}> Play Luck Game </button>
+                            </p>
+
+                            <p className="col-12">
+                                <center> <img src="img/loader.gif" alt="loader" id="loader" className="img-fluid" style={{ width: '5%', display: 'none' }} /></center>
+                            </p>
                         </div>
 
                         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -158,15 +221,15 @@ export default class Account extends Component {
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <div class="modal-body" id = "modal-body">
+                                    <div class="modal-body" id="modal-body">
                                         <p className="col-12">
                                             <label> Account Number </label>
-                                            <input onChange={this.handleAccountNumber} type="number" placeholder="5039XXXXXXXXXXXXX09" />
+                                            <input onChange={this.handleAccountNumber} className="form-control" type="number" placeholder="5039XXXXXXXXXXXXX09" />
                                         </p>
 
                                         <p className="col-12">
                                             <label> Select Bank  </label>
-                                            <select onChange={this.handleBankNameSelect}>
+                                            <select className="form-control" onChange={this.handleBankNameSelect}>
                                                 <option value="" disabled selected> Select Bank  </option>
                                                 <option value="Access Bank"> Access Bank </option>
                                                 <option value="Skye Bank"> Skye Bank </option>
@@ -179,7 +242,7 @@ export default class Account extends Component {
 
                                         <p className="col-12">
                                             <label> Select Account Type </label>
-                                            <select>
+                                            <select className="form-control">
                                                 <option value="" disabled selected> Select Account Type  </option>
                                                 <option value="Savings"> Savings </option>
                                                 <option value="Current"> Current </option>
@@ -188,12 +251,12 @@ export default class Account extends Component {
 
                                         <p className="col-12">
                                             <label> Amount </label>
-                                            <input onChange={this.handleAmountInput} type="number" />
+                                            <input onChange={this.handleAmountInput} className="form-control" type="number" />
                                         </p>
 
                                         <p className="col-12">
                                             <label> Pin </label>
-                                            <input onChange={this.handlePinInput} id="pin" type="password" placeholder="xxxx" />
+                                            <input onChange={this.handlePinInput} className="form-control" id="pin" type="password" placeholder="xxxx" />
                                         </p>
 
                                         <p className="col-12">
