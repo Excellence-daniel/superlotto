@@ -116,8 +116,9 @@ export default class Account extends Component {
         const allGamesPlayed = parseInt(this.state.wins + this.state.losses);
         const luckNumber = Math.floor(Math.random() * 5);
         console.log(luckNumber)
+        const self = this;
         setTimeout(function async() {
-            if (this.state.winsCash < 70000) {
+            if (self.state.winsCash < 70000) {
                 alert('You cannot play the luck game with less than #70,000 gotten from your wins');
                 luckGameBtn.disabled = false;
                 luckGameBtn.innerText = 'Play Luck Game';
@@ -129,26 +130,26 @@ export default class Account extends Component {
                 } else {
                     switch (luckNumber) {
                         case 1:
-                            message = 'You won a house';
+                            message = 'You won a 3 room duplex';
                             break;
                         case 2:
-                            message ='You won a car!';
+                            message ='You won a nice bungalow';
                             break;
                         case 3:
-                            message = 'You won a full kitchen set';
+                            message = 'You won a 4 terrace apartment';
                             break;
                         case 4:
-                           message = 'You won a generator';
+                           message = 'You won a 4 room duplex ';
                             break;
                         case 5:
-                            message = 'You won a laptop';
+                            message = 'You won a studio apartment';
                             break;
                         default:
                             message = "We're sorry. Today is not your lucky day!";
                     }
                     luckGameBtn.disabled = false;
                     luckGameBtn.innerText = 'Play Luck Game';
-                    fireStore.collection('Accounts').doc(this.state.userId).update({
+                    fireStore.collection('Accounts').doc(self.state.userId).update({
                         WinsCash: 0
                     })
                     .then(() => {
