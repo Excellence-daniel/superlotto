@@ -35,6 +35,8 @@ export default class Lotto extends Component {
         const playGameBtn = document.getElementById('playGame');
         const selectAmount = document.getElementById('betAmount');
         const generateLottoBtn = document.getElementById('generateLotto');
+        toast.innerText = 'Loading. Please Wait...';
+        toast.className = "show";
 
         playGameBtn.disabled = true;
         selectAmount.disabled = true;
@@ -57,6 +59,7 @@ export default class Lotto extends Component {
             const playerAccountBalance = getPlayerData.docs[0].data().AccountBalance;
             const playerAccountID = getPlayerData.docs[0].id;
             this.setState({ playerAccountBalance, playerAccountID });
+            toast.className.replace("show", "");
 
             playGameBtn.disabled = false;
             selectAmount.disabled = false;
@@ -173,6 +176,9 @@ export default class Lotto extends Component {
         const toast = document.getElementById("toast");
         let pickednos = this.state.pickedNumbers;
         const newNum = e.target.id;
+        const ballProps = document.getElementById(newNum);
+        ballProps.style.background = '#6d8573bf';
+        ballProps.style.borderColor = '#6d8573bf';
         console.log(newNum);
 
         if (pickednos.length < 5) {
