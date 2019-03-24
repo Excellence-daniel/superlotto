@@ -562,3 +562,8 @@ ul#show{
     opacity : 1px;
     pointer-events : all;
 }
+
+.selected-random-numbers {
+    background : #6d8573bf;
+    border-color : #6d8573bf;
+}
