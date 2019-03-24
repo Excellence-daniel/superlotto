@@ -112,6 +112,8 @@ export default class Lotto extends Component {
         const selectAmount = document.getElementById('betAmount');
         const endGameBtn = document.getElementById('endGame');
         const generateLottoBtn = document.getElementById('generateLotto');
+        const loader = `<img src = 'img/loader.gif' alt = 'loader' style = 'width : 5%'/>`;
+        generateLottoBtn.innerHTML = loader;
         const amountBetOn = this.state.betAmount;
         const toast = document.getElementById("toast");
         const guessed = this.state.lottoNos;
@@ -143,6 +145,7 @@ export default class Lotto extends Component {
 
                 if (guessed.length === 5) {
                     toast.innerText = "Finished Generating.";
+                    generateLottoBtn.innerText = 'Generate Lotto Numbers';
                     if (winNums.length > 0) {
                         self.setState({ winsCash: (parseInt(amountWon) + (parseInt(amountBetOn) * parseInt(winNums.length))), wins: gamesWon + 1 });
                         toast.innerText = "You won " + winNums.length + " balls."
