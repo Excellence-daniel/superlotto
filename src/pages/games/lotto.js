@@ -76,6 +76,7 @@ export default class Lotto extends Component {
     }
 
     startGame = async () => {
+        const loader = `<img src = 'img/loader.gif' alt = 'loader' style = 'width : 5%'/>`;
         const ulForRandomNum = document.getElementById('disabled');
         const playersAccountbalance = this.state.playerAccountBalance;
         const liForRandomNum = ulForRandomNum.childNodes;
@@ -83,8 +84,6 @@ export default class Lotto extends Component {
             console.log(eachBall)
             eachBall.className = 'all-number-balls';
         })
-        console.log(ulForRandomNum.childNodes);
-        // ulForRandomNum.className = 'all-number-balls';
         const playersBetAmount = this.state.betAmount;
         const toast = document.getElementById('toast');
         if (this.state.betAmount === 0) {
@@ -94,13 +93,15 @@ export default class Lotto extends Component {
             if (playersBetAmount > playersAccountbalance) {
                 alert("You don't have enough money in your account to place this amount on a bet. Recharge and try again or pick a lower amount");
             } else {
+                const playGameBtn = document.getElementById('playGame');
+                playGameBtn.disabled = true;
+                playGameBtn.innerHTML = loader;
                 const newBalance = this.state.playerAccountBalance - playersBetAmount;
                 await fireStore.collection('Accounts').doc(this.state.playerAccountID).update({
                     AccountBalance: newBalance
                 });
                 toast.innerText = 'Click to Pick 5 random numbers';
                 toast.className = 'show';
-                const playGameBtn = document.getElementById('playGame');
                 const selectAmount = document.getElementById('betAmount');
                 const endGameBtn = document.getElementById('endGame');
                 const amountPlayed = parseInt(this.state.amountPlayed);
@@ -108,10 +109,10 @@ export default class Lotto extends Component {
                 let numberofGamesPlayed = this.state.gamesPlayed;
                 // const ulForRandomNum = document.getElementById('disabled');
                 console.log("games Played", numberofGamesPlayed);
-                playGameBtn.disabled = true;
                 selectAmount.disabled = true;
                 endGameBtn.disabled = true;
                 this.setState({ pickedNumbers: [], winNumbers: [], lottoNos: [], gamesPlayed: (numberofGamesPlayed + 1), amountPlayed: (amountPlayed + amountBetOn) });
+                playGameBtn.innerText = 'Play Again?'
                 ulForRandomNum.id = "show";
             }
         }
