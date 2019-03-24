@@ -155,14 +155,16 @@ export default class Lotto extends Component {
                         toast.innerText = "You didn't win any ball."
                         toast.className = "show";
                     }
+                    setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 3000);
                     endGameBtn.disabled = false;
                     playGameBtn.innerText = 'Play Again ?';
                     playGameBtn.disabled = false;
                     selectAmount.disabled = false;
                 }
             }
+            setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 3000);
         }, 3000)
-        setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 3000);
+        
     };
 
     playerPickNumbers = e => {
