@@ -76,7 +76,15 @@ export default class Lotto extends Component {
     }
 
     startGame = async () => {
+        const ulForRandomNum = document.getElementById('disabled');
         const playersAccountbalance = this.state.playerAccountBalance;
+        const liForRandomNum = ulForRandomNum.childNodes;
+        liForRandomNum.forEach(eachBall => {
+            console.log(eachBall)
+            eachBall.className = 'all-number-balls';
+        })
+        console.log(ulForRandomNum.childNodes);
+        // ulForRandomNum.className = 'all-number-balls';
         const playersBetAmount = this.state.betAmount;
         const toast = document.getElementById('toast');
         if (this.state.betAmount === 0) {
@@ -98,7 +106,7 @@ export default class Lotto extends Component {
                 const amountPlayed = parseInt(this.state.amountPlayed);
                 const amountBetOn = parseInt(this.state.betAmount);
                 let numberofGamesPlayed = this.state.gamesPlayed;
-                const ulForRandomNum = document.getElementById('disabled');
+                // const ulForRandomNum = document.getElementById('disabled');
                 console.log("games Played", numberofGamesPlayed);
                 playGameBtn.disabled = true;
                 selectAmount.disabled = true;
@@ -177,8 +185,10 @@ export default class Lotto extends Component {
         let pickednos = this.state.pickedNumbers;
         const newNum = e.target.id;
         const ballProps = document.getElementById(newNum);
-        ballProps.style.background = '#6d8573bf';
-        ballProps.style.borderColor = '#6d8573bf';
+        const oldClassName = ballProps.className;
+        // console.log(ballProps.className);
+        ballProps.className = oldClassName + ' selected-random-numbers';
+        console.log(ballProps.className);
         console.log(newNum);
 
         if (pickednos.length < 5) {
