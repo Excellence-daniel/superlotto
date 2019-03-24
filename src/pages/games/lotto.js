@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import Header from '../header';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { fireAuth, fireStore } from '../../config/index';
+
+import LottoDesktop from './views/lotto-desktop';
+import LottoMobile from './views/lotto-mobile';
 
 export default class Lotto extends Component {
 
@@ -20,9 +23,9 @@ export default class Lotto extends Component {
             amountPlayed: 0,
             gamesPlayed: 0,
             numberOfBallsWon: 0,
-            playerAccountBalance: 0, 
-            playerAccountID : '', 
-            redirect : false
+            playerAccountBalance: 0,
+            playerAccountID: '',
+            redirect: false
         };
     }
 
@@ -48,12 +51,12 @@ export default class Lotto extends Component {
             alert('Log in to play game');
             await fireAuth.auth().signOut();
             localStorage.removeItem('UserLoggedIn');
-            this.setState({redirect : true});
+            this.setState({ redirect: true });
         } else {
             const getPlayerData = await fireStore.collection('Accounts').where('Email', '==', user.email).get();
             const playerAccountBalance = getPlayerData.docs[0].data().AccountBalance;
             const playerAccountID = getPlayerData.docs[0].id;
-            this.setState({playerAccountBalance, playerAccountID});
+            this.setState({ playerAccountBalance, playerAccountID });
 
             playGameBtn.disabled = false;
             selectAmount.disabled = false;
@@ -77,12 +80,12 @@ export default class Lotto extends Component {
             toast.innerText = 'You have to place a bet on an amount to play this game';
             toast.className = 'show';
         } else {
-            if (playersBetAmount > playersAccountbalance){
+            if (playersBetAmount > playersAccountbalance) {
                 alert("You don't have enough money in your account to place this amount on a bet. Recharge and try again or pick a lower amount");
             } else {
                 const newBalance = this.state.playerAccountBalance - playersBetAmount;
                 await fireStore.collection('Accounts').doc(this.state.playerAccountID).update({
-                    AccountBalance : newBalance
+                    AccountBalance: newBalance
                 });
                 toast.innerText = 'Click to Pick 5 random numbers';
                 toast.className = 'show';
@@ -206,113 +209,62 @@ export default class Lotto extends Component {
         console.log(wins, losses, winsCash, lossesCash);
 
         await fireStore.collection('Accounts').doc(this.state.playerAccountID).update({
-            Wins : ( wins + parseInt(this.state.wins)), 
-            Losses : (losses + parseInt(this.state.losses)), 
-            LossesCash : (lossesCash + parseInt(this.state.lossesCash)),
-            WinsCash : (winsCash + parseInt(amountBalance))
+            Wins: (wins + parseInt(this.state.wins)),
+            Losses: (losses + parseInt(this.state.losses)),
+            LossesCash: (lossesCash + parseInt(this.state.lossesCash)),
+            WinsCash: (winsCash + parseInt(amountBalance))
         })
     }
 
     render() {
-        if (this.state.redirect === true){
-            return <Redirect to = "/login" />
+        if (this.state.redirect === true) {
+            return <Redirect to="/login" />
         }
         return (
             <div>
                 <Header />
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-md-2"></div>
-                        <div className="col-12 col-md-7">
-                            <div className="col-12">
-                                <div className="card card-body">
-                                    <h2> Random Numbers </h2>
-                                    <ul id="disabled">
-                                        {this.state.numbers.map(num => (
-                                            <li onClick={this.playerPickNumbers} id={num} className="all-number-balls" disabled>
-                                                <span disabled id={num}>{num}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
+                {/* <div className="col-12">
+                    <LottoDesktop
+                        playerPickNumbers={this.playerPickNumbers}
+                        numbers={this.state.numbers}
+                        pickedNumbers={this.state.pickedNumbers}
+                        lottoNos={this.state.lottoNos}
+                        winNumbers={this.state.winNumbers}
+                        generateLottoNumbers={this.generateLottoNumbers}
+                        amounttoPlay={this.amounttoPlay}
+                        startGame={this.startGame}
+                        gamesPlayed={this.state.gamesPlayed}
+                        wins={this.state.wins}
+                        losses={this.state.losses}
+                        lossesCash={this.state.lossesCash}
+                        winsCash={this.state.winsCash}
+                        amountPlayed={this.state.amountPlayed}
+                        endGameAndGetResult={this.endGameAndGetResult}
+                    />
+                </div> */}
 
-                            <div className = "col-12 mt-3">
-                                <div className = "row">
-                                    <div className="col-12 col-md-5">
-                                        <div className="card card-body">
-                                            <h2> Picked Numbers </h2>
-                                            <ul>
-                                                {this.state.pickedNumbers.map(picked => (
-                                                    <li className="picked-balls">
-                                                        <span>{picked}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    </div>
+                <div className="col-12">
+                    <LottoMobile
+                        playerPickNumbers={this.playerPickNumbers}
+                        numbers={this.state.numbers}
+                        pickedNumbers={this.state.pickedNumbers}
+                        lottoNos={this.state.lottoNos}
+                        winNumbers={this.state.winNumbers}
+                        generateLottoNumbers={this.generateLottoNumbers}
+                        amounttoPlay={this.amounttoPlay}
+                        startGame={this.startGame}
+                        gamesPlayed={this.state.gamesPlayed}
+                        wins={this.state.wins}
+                        losses={this.state.losses}
+                        lossesCash={this.state.lossesCash}
+                        winsCash={this.state.winsCash}
+                        amountPlayed={this.state.amountPlayed}
+                        endGameAndGetResult={this.endGameAndGetResult}
+                    />
+                </div>
 
-                                    <div className="col-12 col-md-7">
-                                        <div className="card card-body">
-                                            <h2> Lotto Numbers </h2>
-                                            <ul>
-                                                {this.state.lottoNos.map(number => (
-                                                    <li className="lotto-balls" disabled>
-                                                        <span>{number}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                    <div className="card card-body col-12 col-md-6 offset-md-3 mt-4">
-                                        <h2> Win Numbers </h2>
-                                        <ul>
-                                            {this.state.winNumbers.map((wins) => (
-                                                <li className="wins-balls"> {wins} </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="col-12 mt-4">
-                                <button className="btn btn-block btn-info" id="generateLotto" onClick={this.generateLottoNumbers}> Generate Lotto Numbers </button>
-                            </div>
-
-                        </div>
-                        <div className="col-12 col-md-3">
-                            <div className="card card-body">
-                                <p className="col-12">
-                                    <label> Amount </label>
-                                    <select className = "form-control" onChange={this.amounttoPlay} id="betAmount">
-                                        <option value="" selected disabled> --Select An Amount To Bet On -- </option>
-                                        <option value="500"> #500 </option>
-                                        <option value="1000"> #1,000</option>
-                                        <option value="2000"> #2,000 </option>
-                                        <option value="5000"> #5,000 </option>
-                                        <option value="10000"> #10,000 </option>
-                                    </select>
-                                    <button className="btn btn-block btn-info mt-2" id="playGame" onClick={this.startGame}> Play </button>
-                                </p>
-
-                                <p className="col-12" id="stats">
-                                    <span> Stats </span>
-                                    <p> Games Played : <span id="toright"> {this.state.gamesPlayed} </span></p>
-                                    <p> Wins : <span id="toright"> {this.state.wins} </span></p>
-                                    <p> Losses : <span id="toright"> {this.state.losses} </span></p>
-                                    <p> Amount Won(#) : <span id="toright"> {this.state.winsCash} </span></p>
-                                    <p> Amount Lost (#) : <span id="toright"> {this.state.lossesCash} </span></p>
-                                    <p> Amount Played (#) : <span id="toright"> {this.state.amountPlayed} </span></p>
-                                    <p> <button className="btn btn-block btn-danger" id="endGame" onClick={this.endGameAndGetResult}> End Game </button></p>
-                                    <p id="result"> </p>
-                                </p>
-                                <div id="toast">
-                                    {/* Toast Message Goes In Here */}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div id="toast">
+                    {/* Toast Message Goes In Here */}
                 </div>
             </div>
         )
