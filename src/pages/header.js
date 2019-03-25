@@ -50,7 +50,7 @@ export default class Header extends Component {
         if (userLoggedIn) {
             return (
                 <div>
-                    {/* //for small screens */}
+                    {/* //for large screens */}
                     <nav class="navbar nav-style navbar-expand-lg for-large">
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
@@ -60,7 +60,7 @@ export default class Header extends Component {
                                 <center>
                                     <Link to="/">
                                         <a class="navbar-brand">
-                                            <img src="img/lotto-logo.png" alt="logo" class="img-fluid" style={{ width: '60%' }} />
+                                            <img src="http://www.ararat.com.my/image/Logo/09-05-2016-17-38-01logo_lotto.png" alt="logo" class="img-fluid" style={{ width: '60%'}} />
                                         </a>
                                     </Link>
                                 </center>
@@ -116,7 +116,7 @@ export default class Header extends Component {
                             <div class="col-9">
                                 <Link to="/">
                                     <a class="navbar-brand">
-                                        <img src="http://woodphoriaky.com/wp-content/uploads/2018/05/logo-designer-com-png-logo-design-transparent-logo-design-images-pluspng-template.png" alt="logo" class="img-fluid" style={{ width: '70%' }} />
+                                        <img src="http://www.ararat.com.my/image/Logo/09-05-2016-17-38-01logo_lotto.png" alt="logo" class="img-fluid" style={{ width: '70%', marginTop : '40px' }} />
                                     </a>
                                 </Link>
                             </div>
@@ -187,7 +187,7 @@ export default class Header extends Component {
                             <div class="col-3">
                                 <Link to="/">
                                     <a class="navbar-brand">
-                                        <img src="img/lotto-logo.png" alt="logo" class="img-fluid" style={{ width: '60%' }} />
+                                        <img src="http://www.ararat.com.my/image/Logo/09-05-2016-17-38-01logo_lotto.png" alt="logo" class="img-fluid" style={{ width: '60%'}} />
                                     </a>
                                 </Link>
                             </div>
@@ -231,7 +231,7 @@ export default class Header extends Component {
                             <div class="col-9">
                                 <Link to="/">
                                     <a class="navbar-brand">
-                                        <img src="http://woodphoriaky.com/wp-content/uploads/2018/05/logo-designer-com-png-logo-design-transparent-logo-design-images-pluspng-template.png" alt="logo" class="img-fluid" style={{ width: '70%' }} />
+                                        <img src="http://www.ararat.com.my/image/Logo/09-05-2016-17-38-01logo_lotto.png" alt="logo" class="img-fluid" style={{ width: '70%', marginTop : '40px' }} />
                                     </a>
                                 </Link>
                             </div>
