@@ -433,7 +433,7 @@ h3 {
     outline: none;
     padding: 9px;
     float: left;
-    border-radius: 50%;
+    border-radius: 10%;
     font-size: 20px;
     width: 50px;
     text-align: center;
@@ -452,7 +452,7 @@ h3 {
     outline: none;
     padding: 9px;
     float: left;
-    border-radius: 50%;
+    border-radius: 10%;
     font-size: 20px;
     width: 50px;
     text-align: center;
@@ -471,7 +471,7 @@ h3 {
     outline: none;
     padding: 9px;
     float: left;
-    border-radius: 50%;
+    border-radius: 10%;
     font-size: 20px;
     width: 50px;
     text-align: center;
@@ -490,7 +490,7 @@ h3 {
     outline: none;
     padding: 9px;
     float: left;
-    border-radius: 50%;
+    border-radius: 10%;
     font-size: 20px;
     width: 50px;
     text-align: center;
