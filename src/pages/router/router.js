@@ -9,6 +9,7 @@ import Account from '../account';
 // import Games from '../games';
 import Lotto from '../games/lotto';
 import ConfirmEmail from '../confirmEmail';
+import Result from '../results';
 
 export default function Routerr (){
     return (
@@ -21,6 +22,7 @@ export default function Routerr (){
                 {/* <Route exact path = '/games' component = {Games}/> */}
                 <Route exact path = '/lotto' component = {Lotto}/>
                 <Route exact path = '/confirmEmail' component = {ConfirmEmail}/>
+                <Route exact path = '/checkResults' component = {Result}/>
                 
                 {/* <Route exact path = "/club/editClub" render ={(props) => <EditClub {...props}/>}/> */}
 
