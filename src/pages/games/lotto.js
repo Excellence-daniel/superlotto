@@ -112,7 +112,7 @@ export default class Lotto extends Component {
                 selectAmount.disabled = true;
                 endGameBtn.disabled = true;
                 this.setState({ pickedNumbers: [], winNumbers: [], lottoNos: [], gamesPlayed: (numberofGamesPlayed + 1), amountPlayed: (amountPlayed + amountBetOn) });
-                playGameBtn.innerText = 'Play Again?'
+                playGameBtn.innerText = 'Draw Again?'
                 ulForRandomNum.id = "show";
             }
         }
@@ -169,14 +169,14 @@ export default class Lotto extends Component {
                     }
                     setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 3000);
                     endGameBtn.disabled = false;
-                    playGameBtn.innerText = 'Play Again ?';
+                    playGameBtn.innerText = 'Draw Again ?';
                     playGameBtn.disabled = false;
                     selectAmount.disabled = false;
                 }
             }
             setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 3000);
         }, 3000)
-        
+
     };
 
     playerPickNumbers = e => {
@@ -242,30 +242,12 @@ export default class Lotto extends Component {
         if (this.state.redirect === true) {
             return <Redirect to="/login" />
         }
-        return (
-            <div>
-                <Header />
-                {/* <div className="col-12">
-                    <LottoDesktop
-                        playerPickNumbers={this.playerPickNumbers}
-                        numbers={this.state.numbers}
-                        pickedNumbers={this.state.pickedNumbers}
-                        lottoNos={this.state.lottoNos}
-                        winNumbers={this.state.winNumbers}
-                        generateLottoNumbers={this.generateLottoNumbers}
-                        amounttoPlay={this.amounttoPlay}
-                        startGame={this.startGame}
-                        gamesPlayed={this.state.gamesPlayed}
-                        wins={this.state.wins}
-                        losses={this.state.losses}
-                        lossesCash={this.state.lossesCash}
-                        winsCash={this.state.winsCash}
-                        amountPlayed={this.state.amountPlayed}
-                        endGameAndGetResult={this.endGameAndGetResult}
-                    />
-                </div> */}
 
-                <div className="col-12">
+        const screenSize = window.matchMedia("(max-width : 768px");
+        if (screenSize.matches) {
+            return (
+                <div className = "col-12">
+                    <Header />
                     <LottoMobile
                         playerPickNumbers={this.playerPickNumbers}
                         numbers={this.state.numbers}
@@ -283,12 +265,39 @@ export default class Lotto extends Component {
                         amountPlayed={this.state.amountPlayed}
                         endGameAndGetResult={this.endGameAndGetResult}
                     />
+                    <div id="toast"></div>
                 </div>
+            )
+        } else {
+            return (
+                <div className = "col-12">
+                    <Header />
+                    <LottoDesktop
+                        playerPickNumbers={this.playerPickNumbers}
+                        numbers={this.state.numbers}
+                        pickedNumbers={this.state.pickedNumbers}
+                        lottoNos={this.state.lottoNos}
+                        winNumbers={this.state.winNumbers}
+                        generateLottoNumbers={this.generateLottoNumbers}
+                        amounttoPlay={this.amounttoPlay}
+                        startGame={this.startGame}
+                        gamesPlayed={this.state.gamesPlayed}
+                        wins={this.state.wins}
+                        losses={this.state.losses}
+                        lossesCash={this.state.lossesCash}
+                        winsCash={this.state.winsCash}
+                        amountPlayed={this.state.amountPlayed}
+                        endGameAndGetResult={this.endGameAndGetResult}
+                    />
+                    <div id="toast"></div>
+                </div>
+            )
+        }
 
-                <div id="toast">
-                    {/* Toast Message Goes In Here */}
-                </div>
-            </div>
-        )
+        // return 
+        //     <div id="toast">
+        //         {/* Toast Message Goes In Here */}
+        //     </div>
+
     }
 }
