@@ -69,7 +69,7 @@ export default class Header extends Component {
                                         </li>
 
                                         <li class="nav-item active">
-                                            <Link>
+                                            <Link to = "/checkResults">
                                                 <a> Check Results </a>
                                             </Link>
                                         </li>
@@ -111,7 +111,7 @@ export default class Header extends Component {
                                         </li>
 
                                         <li class="nav-item mt-2 active">
-                                            <Link>
+                                            <Link to = "/checkResults">
                                                 <a> Check Results </a>
                                             </Link>
                                         </li>
@@ -165,7 +165,7 @@ export default class Header extends Component {
                                         </li>
 
                                         <li class="nav-item active">
-                                            <Link>
+                                            <Link to = "/checkResults">
                                                 <a> Check Results </a>
                                             </Link>
                                         </li>
@@ -215,7 +215,7 @@ export default class Header extends Component {
                                         </li>
 
                                         <li class="nav-item mt-2 active">
-                                            <Link>
+                                            <Link to = "/checkResults">
                                                 <a> Check Results </a>
                                             </Link>
                                         </li>
