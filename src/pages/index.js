@@ -17,7 +17,7 @@ export default class App extends Component {
         return (
             <div>
                 <Header />
-                <img alt = "SuperLotto Img" class = "img-fluid" style = {{width : '100%'}} src="img/lotto-win.jpg" />
+                <img alt = "SuperLotto Img" className = "img-fluid" style = {{width : '100%'}} src="img/lottery.png" />
             </div>
         )
     }
