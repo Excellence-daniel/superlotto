@@ -4,8 +4,8 @@ export default function LottoDesktop(props) {
     return (
         <div className="container-fluid">
             <div className="row">
-                <div className="col-md-2"></div>
-                <div className="col-12 col-md-7">
+                <div className="col-md-1"></div>
+                <div className="col-12 col-md-8">
                     <div className="col-12">
                         <div className="card card-body">
                             <h2> Random Numbers </h2>
@@ -75,7 +75,7 @@ export default function LottoDesktop(props) {
                                 <option value="5000"> #5,000 </option>
                                 <option value="10000"> #10,000 </option>
                             </select>
-                            <button className="btn btn-block btn-info mt-2" id="playGame" onClick={props.startGame}> Play </button>
+                            <button className="btn btn-block btn-info mt-2" id="playGame" onClick={props.startGame}> Draw </button>
                         </p>
 
                         <p className="col-12" id="stats">
