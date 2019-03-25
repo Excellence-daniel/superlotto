@@ -17,11 +17,11 @@ exports.validateNewEmail = functions.firestore
         if (user) {
             const msg = {
                 to: user.Email,
-                from: 'SuperLotto@gmail.com',
+                from: 'Ez-Homes@lottogames.com',
                 subject: 'Email Verification : ',
                 // text: `Hey ${toName}. You have a new follower!!! `
                 html: `
-                            <strong> Hello ${user.Name}. Welcome to SuperLotto App. You have to verify your email to enable you access to particular pages. Click on the button below to confirm your email. Thank you.</strong>
+                            <strong> Hello ${user.Name}. Welcome to Ez-Homes App. You have to verify your email to enable you access to particular pages. Click on the button below to confirm your email. Thank you.</strong>
                                 <br/><br/><br/>
                             <center>
                                 <a href = ${url}> <button> Confirm Email </button> </a>
