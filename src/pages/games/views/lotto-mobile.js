@@ -14,7 +14,7 @@ export default function LottoMobile(props) {
                         <option value="5000"> #5,000 </option>
                         <option value="10000"> #10,000 </option>
                     </select>
-                    <button className="btn btn-block btn-info mt-2" id="playGame" onClick={props.startGame}> Play </button>
+                    <button className="btn btn-block btn-info mt-2" id="playGame" onClick={props.startGame}> Draw </button>
                 </div>
 
                 <div className="col-12 card card-body mt-3">
