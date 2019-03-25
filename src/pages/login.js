@@ -42,7 +42,10 @@ export default class Login extends Component {
                     await fireAuth.auth().signInWithEmailAndPassword(email, password)
                     const getUserQuery = await fireStore.collection('Users').where('Email', '==', email).get();
                     if (getUserQuery.docs[0].data().EmailVerified){
-                        var user = await fireAuth.auth().currentUser;
+                        const user = await fireAuth.auth().currentUser;
+                        const getUserData = await fireStore.colelction('Users').where('Email', '==', user.email).get()
+                        const userName = getUserData.docs[0].data().Name;
+                        localStorage.setItem('UserName', userName);
                         localStorage.setItem('UserLoggedIn' , true);
                         alert('Login Successful');
                         this.setState({redirect : true})
