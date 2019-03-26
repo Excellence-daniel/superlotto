@@ -131,8 +131,8 @@ export default class Header extends Component {
 
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <div class="row">
-                                <div class='col-4'></div>
-                                <div class='col-4'>
+                                <div class='col-1'></div>
+                                <div class='col-10'>
                                     <center>
                                         <p className ="row">
                                             <p className="col-2" style={{ marginRight: '0px', marginLeft: '0px' }}>
@@ -168,7 +168,7 @@ export default class Header extends Component {
                                         </ul>
                                     </center>
                                 </div>
-                                <div class='col-4'></div>
+                                <div class='col-1'></div>
                             </div>
                         </div>
                     </nav>
@@ -246,8 +246,8 @@ export default class Header extends Component {
 
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <div class="row">
-                                <div class='col-4'></div>
-                                <div class='col-4'>
+                                <div class='col-1'></div>
+                                <div class='col-10'>
                                     <center>
                                         <div class="row">
                                             <p className="col-6">
@@ -276,7 +276,7 @@ export default class Header extends Component {
                                         </ul>
                                     </center>
                                 </div>
-                                <div class='col-4'></div>
+                                <div class='col-1'></div>
                             </div>
                         </div>
                     </nav>
